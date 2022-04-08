@@ -1,0 +1,32 @@
+.container{
+  max-width: 600px;
+  max-height: 65vh;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.element {
+  width: 100%;
+  display: grid;
+  gap: 13.5px;
+  grid-template-columns: min-content 1fr;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.element:first-of-type {
+  grid-template-columns: 1fr;
+  justify-items: flex-end;
+}
+
+.element:last-of-type {
+  grid-template-columns: 1fr;
+  justify-items: flex-end;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
