@@ -4,6 +4,7 @@ import BurgerIngredients from "../burgerIngredients/BurgerIngredients";
 import IngredientDetails from "../ingredientDetails/IngredientDetails";
 import BurgerConstructor from "../burgerConstructor/burgerConstructor";
 import Modal from "../modal/Modal";
+import OrderDetails from "../orderDetails/OrderDetails";
 
 import style from './App.module.css'
 
@@ -13,11 +14,20 @@ const App = () => {
     isIngredientDetailsOpened,
     setIsIngredientDetailsOpened
   ] = React.useState(false);
+
+  const [
+    isOrderDetailsOpened,
+    setIsOrderDetailsOpened
+  ] = React.useState(false);
   const [ingredients, setIngredients] = React.useState([]);
   const [currentIngredient, setCurrentIngredient] = React.useState({});
 
   const closeModals = () => {
     setIsIngredientDetailsOpened(false);
+  };
+
+  const closeModalsOrder = () => {
+    setIsOrderDetailsOpened(false);
   };
 
   const handleEscKeydown = (event) => {
@@ -40,6 +50,10 @@ const App = () => {
     setIsIngredientDetailsOpened(true);
   };
 
+  const handleOrderClick = () => {
+    setIsOrderDetailsOpened(true);
+  };
+
   return (
     <>
       <AppHeader />
@@ -52,13 +66,18 @@ const App = () => {
           />
         </section>
         <section className={'ml-10 mt-25'}>
-          <BurgerConstructor ingredients={ingredients}/>
+          <BurgerConstructor ingredients={ingredients} handleOrder={handleOrderClick}/>
         </section>
         </div>
       </main>
       {isIngredientDetailsOpened && (
         <Modal onCloseClick={closeModals} onEscKeydown={handleEscKeydown}>
-          <IngredientDetails ingredient={currentIngredient} />
+          <IngredientDetails ingredient={currentIngredient} handleOrder={handleOrderClick}/>
+        </Modal>
+      )}
+      {isOrderDetailsOpened && (
+        <Modal onCloseClick={closeModalsOrder} onEscKeydown={handleEscKeydown}>
+          <OrderDetails />
         </Modal>
       )}
     </>

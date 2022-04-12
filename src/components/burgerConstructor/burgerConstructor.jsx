@@ -1,29 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import {ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import style from "./burgerConstructor.module.css"
 
-const Order = ({data}) => {
+const Order = ({data, handleOrder}) => {
+  const [endPrice, setEndPrice] = React.useState(0);
+
+  useEffect(()=> {
+    let summ = data.reduce(
+      (total, data) =>  total + data.price, 0
+    )
+    setEndPrice(summ)
+  })
+
   return (
     <div className={" mt-10 " + style.price}>
     <p className="mr-10 text text_type_digits-medium">
+      {endPrice}
       <CurrencyIcon type="primary" />
     </p>
-    <Button type="primary" size="large">
+    <Button type="primary" size="large" onClick={handleOrder}>
       Оформить заказ
     </Button>
   </div>
   )
 }
 
-const BurgerConstructor = ({ingredients}) => {
+const BurgerConstructor = ({ingredients, handleOrder}) => {
 
   return (
     <>
       <div className={" pr-2 "+style.container}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div  key={'1'} className={style.element}>
+          <div  key={'sdfn2kckfwsd7'} className={style.element}>
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -46,7 +56,7 @@ const BurgerConstructor = ({ingredients}) => {
                 </div>
               </>
           ))}
-          <div  key={"2"} className={style.element}>
+          <div  key={"sdfgs34b68gv534"} className={style.element}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -57,7 +67,7 @@ const BurgerConstructor = ({ingredients}) => {
            </div>
         </div>
       </div>
-      <Order data={ingredients}/>
+      <Order data={ingredients} handleOrder={handleOrder}/>
     </>
   )
 }

@@ -3,6 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ModalOverlay from "../modalOverlay/ModalOverlay";
 
+import style from './Modal.module.css';
+
 const modalsContainer = document.querySelector("#modals");
 
 const Modal = ({ onCloseClick, onEscKeydown, children }) => {
@@ -16,13 +18,14 @@ const Modal = ({ onCloseClick, onEscKeydown, children }) => {
 
   return ReactDOM.createPortal(
     <>
-      <div>
-        <button type="button">
-          <CloseIcon type="error" onClick={onCloseClick} />
+    <ModalOverlay onClick={onCloseClick}>
+      <div className={style.box}>
+        <button type="button" className={style.button}>
+          <CloseIcon type="primary" onClick={onCloseClick} />
         </button>
-        {children} {/* <IngredientDetails /> */}
+        {children}
       </div>
-      <ModalOverlay onClick={onCloseClick} />
+    </ModalOverlay>
     </>,
     modalsContainer
   );
