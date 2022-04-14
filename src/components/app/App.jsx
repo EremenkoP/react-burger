@@ -9,7 +9,7 @@ import OrderDetails from "../orderDetails/OrderDetails";
 import style from './App.module.css'
 
 const App = () => {
-  const URL = "https://norma.nomoreparties.space/api/ingredients";
+  const URL = "https://norma.nomoreparties.space/api/";
   const [
     isIngredientDetailsOpened,
     setIsIngredientDetailsOpened
@@ -19,6 +19,8 @@ const App = () => {
     isOrderDetailsOpened,
     setIsOrderDetailsOpened
   ] = React.useState(false);
+
+
   const [ingredients, setIngredients] = React.useState([]);
   const [currentIngredient, setCurrentIngredient] = React.useState({});
 
@@ -30,19 +32,19 @@ const App = () => {
     setIsOrderDetailsOpened(false);
   };
 
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeModals();
+  const getResponseData = (res) => {
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   };
 
   React.useEffect(() => {
-    fetch(`${URL}`, {
+    fetch(`${URL}ingredients`, {
       headers: {
         "Content-Type": "application/json"
       }
     })
-      .then((res) => res.json())
+      .then((res) => getResponseData(res))
       .then((res) => setIngredients(res.data))
-      .then((res) => console.log(res))
+      .catch((res) => console.log(res))
   }, []);
 
   const handleIngredientClick = (ingredient) => {
@@ -62,21 +64,23 @@ const App = () => {
         <section>
           <BurgerIngredients
             ingredients={ingredients}
-            onClick2={handleIngredientClick}
+            openIngredientDetails={handleIngredientClick}
           />
         </section>
         <section className={'ml-10 mt-25'}>
-          <BurgerConstructor ingredients={ingredients} handleOrder={handleOrderClick}/>
+          <BurgerConstructor ingredients={ingredients} handleOrder={handleOrderClick} />
+          {/* если вдруг не запускается, закомитить вызов BurgerConstructor, обновить страницу, потом раскомитить, и обновиться еще раз и все зарабоает.
+           Ему почему то не нравиться передеваемое на первый ConstructorElement, при написании руками все работает)*/}
         </section>
         </div>
       </main>
       {isIngredientDetailsOpened && (
-        <Modal onCloseClick={closeModals} onEscKeydown={handleEscKeydown}>
-          <IngredientDetails ingredient={currentIngredient} handleOrder={handleOrderClick}/>
+        <Modal onCloseClick={closeModals} closeModals={closeModals} modaleTitle={"Детали ингредиента"}>
+          <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
       {isOrderDetailsOpened && (
-        <Modal onCloseClick={closeModalsOrder} onEscKeydown={handleEscKeydown}>
+        <Modal onCloseClick={closeModalsOrder} closeModals={closeModalsOrder}>
           <OrderDetails />
         </Modal>
       )}

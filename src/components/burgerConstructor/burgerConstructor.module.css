@@ -1,6 +1,6 @@
 .container{
   max-width: 600px;
-  max-height: 65vh;
+  max-height: 45vh;
   overflow-x: hidden;
   max-width: 100%;
 }
@@ -15,14 +15,18 @@
   justify-content: center;
 }
 
-.element:first-of-type {
+.element_top {
   grid-template-columns: 1fr;
-  justify-items: flex-end;
+  justify-content: flex-end;
+  display: flex;
+  margin-bottom: 10px;
 }
 
-.element:last-of-type {
+.element_buttom {
   grid-template-columns: 1fr;
-  justify-items: flex-end;
+  justify-content: flex-end;
+  display: flex;
+  margin-top: 10px;
 }
 
 .price {

@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import style from "./burgerConstructor.module.css"
+import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
 
 const Order = ({data, handleOrder}) => {
-  const [endPrice, setEndPrice] = React.useState(0);
+  const endPrice  = useMemo(() => data.reduce(
+    (total, data) => total + data.price, 0), [data]
+  )
 
-  useEffect(()=> {
-    let summ = data.reduce(
-      (total, data) =>  total + data.price, 0
-    )
-    setEndPrice(summ)
-  })
 
   return (
     <div className={" mt-10 " + style.price}>
@@ -31,17 +28,17 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
 
   return (
     <>
+    <div  key={ingredients[0]._id} className={" mr-4 " + style.element_top}>
+      <ConstructorElement
+      type="top"
+      isLocked={true}
+      text={ingredients[0].name}
+      price={ingredients[0].price}
+      thumbnail={ingredients[0].image_mobile}
+      />
+    </div>
       <div className={" pr-2 "+style.container}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div  key={'sdfn2kckfwsd7'} className={style.element}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text="Краторная булка N-200i (верх)"
-              price={200}
-              thumbnail="https://code.s3.yandex.net/react/code/bun-02-mobile.png"
-          />
-           </div>
           {ingredients
             .filter((ingredient) => ingredient.type !== "bun")
             .map((ingredient) => (
@@ -56,16 +53,17 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
                 </div>
               </>
           ))}
-          <div  key={"sdfgs34b68gv534"} className={style.element}>
+        </div>
+      </div>
+      <div  key={ingredients[1]._id} className={" mr-4 " + style.element_buttom}>
+        {/* прописал вторую булку для различных Id, бесят предупреждения в консоли */}
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text="Краторная булка N-200i (низ)"
-              price={200}
-              thumbnail="https://code.s3.yandex.net/react/code/bun-02-mobile.png"
+              text={ingredients[1].name}
+              price={ingredients[1].price}
+              thumbnail={ingredients[1].image_mobile}
           />
-           </div>
-        </div>
       </div>
       <Order data={ingredients} handleOrder={handleOrder}/>
     </>
@@ -73,7 +71,8 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  handleOrder: PropTypes.func,
 };
 
 export default BurgerConstructor;

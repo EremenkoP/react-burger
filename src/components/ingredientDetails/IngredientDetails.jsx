@@ -1,10 +1,9 @@
-import PropTypes from "prop-types";
+import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
 import style from './IngredientDetails.module.css';
 
 const IngredientDetails = ({ ingredient }) => {
   return (
     <>
-      <h2 className="mt-10 ml-10 text text_type_main-large">Детали ингредиента</h2>
       <img src={ingredient.image_large} alt={ingredient.name} />
       <h3 className={"mt-4 text text_type_main-medium " + style.title}>{ingredient.name}</h3>
       <div className={style.box }>
@@ -22,7 +21,7 @@ const IngredientDetails = ({ ingredient }) => {
 };
 
 IngredientDetails.propTypes = {
-  ingredient: PropTypes.object.isRequired
+  ingredient: ingredientPropTypes.isRequired
 };
 
 export default IngredientDetails;

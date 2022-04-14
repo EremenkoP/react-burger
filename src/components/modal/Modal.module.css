@@ -9,6 +9,8 @@
   z-index: 4;
   flex-direction: column;
   width: 50%;
+  top: 15%;
+  left: 25%;
 }
 
 .button {
