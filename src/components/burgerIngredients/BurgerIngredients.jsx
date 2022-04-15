@@ -21,7 +21,7 @@ const Tabs = () => {
   )
 }
 
-const BurgerIngredients = ({ ingredients, onClick2 }) => {
+const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
   return (
     <>
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
@@ -32,14 +32,14 @@ const BurgerIngredients = ({ ingredients, onClick2 }) => {
           {ingredients
             .filter((ingredient) => ingredient.type === "bun")
             .map((ingredient) => (
-              <li  key={ingredient._id}>
+              <li  key={ingredient._id} onClick={() => openIngredientDetails(ingredient)}>
                 <article className={style.li}>
                   <img src={ingredient.image} alt={`Изображение ${ingredient.name}`}  ></img>
                   <p className={'text text_type_digits-default mt-1 mb-1 '}>
                     {ingredient.price}  &nbsp;
                     <CurrencyIcon type="primary" />
                   </p>
-                  <h3 className={'text text_type_main-small ' + style.name} onClick={() => onClick2(ingredient)}>{ingredient.name}</h3>
+                  <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
                 </article>
               </li>
             ))}
@@ -50,13 +50,13 @@ const BurgerIngredients = ({ ingredients, onClick2 }) => {
             .filter((ingredient) => ingredient.type === "sauce")
             .map((ingredient) => (
               <li key={ingredient._id}>
-                <article className={style.li}>
+                <article className={style.li} onClick={() => openIngredientDetails(ingredient)}>
                   <img src={ingredient.image} alt={`Изображение ${ingredient.name}`}  ></img>
                   <p className={'text text_type_digits-default mt-1 mb-1 '}>
                     {ingredient.price} &nbsp;
                     <CurrencyIcon type="primary" />
                   </p>
-                  <h3 className={'text text_type_main-small ' + style.name} onClick={() => onClick2(ingredient)}>{ingredient.name}</h3>
+                  <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
                 </article>
               </li>
             ))}
@@ -67,13 +67,13 @@ const BurgerIngredients = ({ ingredients, onClick2 }) => {
             .filter((ingredient) => ingredient.type === "main")
             .map((ingredient) => (
               <li key={ingredient._id}>
-                <article className={style.li}>
+                <article className={style.li} onClick={() => openIngredientDetails(ingredient)}>
                   <img src={ingredient.image} alt={`Изображение ${ingredient.name}`}  ></img>
                   <p className={'text text_type_digits-default mt-1 mb-1 '}>
                     {ingredient.price} &nbsp;
                     <CurrencyIcon type="primary" />
                   </p>
-                  <h3 className={'text text_type_main-small ' + style.name} onClick={() => onClick2(ingredient)}>{ingredient.name}</h3>
+                  <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
                 </article>
               </li>
             ))}
@@ -83,9 +83,25 @@ const BurgerIngredients = ({ ingredients, onClick2 }) => {
   );
 };
 
+const ingredientPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name:PropTypes.string.isRequired,
+  type:PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
+  proteins:PropTypes.number.isRequired,
+  fat:PropTypes.number.isRequired,
+  carbohydrates:PropTypes.number.isRequired,
+  calories:PropTypes.number.isRequired,
+  price:PropTypes.number.isRequired,
+  image:PropTypes.string.isRequired,
+  image_mobile:PropTypes.string.isRequired,
+  image_large:PropTypes.string.isRequired,
+})
+
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onClick: PropTypes.func
+  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  openIngredientDetails: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;
+
+export {ingredientPropTypes};
