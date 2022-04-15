@@ -69,18 +69,16 @@ const App = () => {
         </section>
         <section className={'ml-10 mt-25'}>
           <BurgerConstructor ingredients={ingredients} handleOrder={handleOrderClick} />
-          {/* если вдруг не запускается, закомитить вызов BurgerConstructor, обновить страницу, потом раскомитить, и обновиться еще раз и все зарабоает.
-           Ему почему то не нравиться передеваемое на первый ConstructorElement, при написании руками все работает)*/}
         </section>
         </div>
       </main>
       {isIngredientDetailsOpened && (
-        <Modal onCloseClick={closeModals} closeModals={closeModals} modaleTitle={"Детали ингредиента"}>
+        <Modal onCloseClick={closeModals} modalTitle={"Детали ингредиента"}>
           <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
       {isOrderDetailsOpened && (
-        <Modal onCloseClick={closeModalsOrder} closeModals={closeModalsOrder}>
+        <Modal onCloseClick={closeModalsOrder}>
           <OrderDetails />
         </Modal>
       )}

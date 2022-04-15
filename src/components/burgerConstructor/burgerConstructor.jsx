@@ -28,15 +28,15 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
 
   return (
     <>
-    <div  key={ingredients[0]._id} className={" mr-4 " + style.element_top}>
+    { ingredients[0] && (<div  key={ingredients[0]._id} className={" mr-4 " + style.element_top}>
       <ConstructorElement
       type="top"
       isLocked={true}
-      text={ingredients[0].name}
+      text={`${ingredients[0].name} (верх)`}
       price={ingredients[0].price}
       thumbnail={ingredients[0].image_mobile}
       />
-    </div>
+    </div> )}
       <div className={" pr-2 "+style.container}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {ingredients
@@ -55,16 +55,15 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
           ))}
         </div>
       </div>
-      <div  key={ingredients[1]._id} className={" mr-4 " + style.element_buttom}>
-        {/* прописал вторую булку для различных Id, бесят предупреждения в консоли */}
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={ingredients[1].name}
-              price={ingredients[1].price}
-              thumbnail={ingredients[1].image_mobile}
-          />
-      </div>
+      { ingredients[0] && (<div  key={ingredients[0]._id} className={" mr-4 " + style.element_buttom}>
+        <ConstructorElement
+          type="bottom"
+          isLocked={true}
+          text={`${ingredients[0].name} (низ)`}
+          price={ingredients[0].price}
+          thumbnail={ingredients[0].image_mobile}
+        />
+      </div>)}
       <Order data={ingredients} handleOrder={handleOrder}/>
     </>
   )
@@ -72,7 +71,7 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-  handleOrder: PropTypes.func,
+  handleOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

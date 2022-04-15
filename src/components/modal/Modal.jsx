@@ -9,13 +9,16 @@ import style from './Modal.module.css';
 const modalsContainer = document.querySelector("#modals");
 
 
-const Modal = ({ onCloseClick, children, closeModals , modaleTitle}) => {
+const Modal = ({ onCloseClick, children, modalTitle}) => {
 
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeModals();
-  };
 
-  React.useEffect(() => {
+
+  React.useEffect((onCloseClick) => {
+
+    const handleEscKeydown = (event) => {
+      event.key === "Escape" && onCloseClick();
+    };
+
     document.addEventListener("keydown", handleEscKeydown);
 
     return () => {
@@ -26,7 +29,7 @@ const Modal = ({ onCloseClick, children, closeModals , modaleTitle}) => {
   return ReactDOM.createPortal(
     <>
     <div className={style.box}>
-      <h2 className="mt-10 ml-10 text text_type_main-large">{modaleTitle}</h2>
+      <h2 className="mt-10 ml-10 text text_type_main-large">{modalTitle}</h2>
       <button type="button" className={style.button}>
         <CloseIcon type="primary" onClick={onCloseClick} />
       </button>
@@ -39,10 +42,9 @@ const Modal = ({ onCloseClick, children, closeModals , modaleTitle}) => {
 };
 
 Modal.propTypes = {
-  onCloseClick: PropTypes.func,
-  children: PropTypes.node,
-  closeModals: PropTypes.func,
-  modaleTitle: PropTypes.string
+  onCloseClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  modaleTitle: PropTypes.string.isRequired
 };
 
 export default Modal;
