@@ -1,5 +1,5 @@
 import React from "react";
-import { CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Tab, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
 import style from './BurgerIngredients.module.css'
@@ -40,6 +40,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
                     <CurrencyIcon type="primary" />
                   </p>
                   <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
+                  <Counter count={1} size="default" />
                 </article>
               </li>
             ))}
@@ -57,6 +58,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
                     <CurrencyIcon type="primary" />
                   </p>
                   <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
+                  <Counter count={1} size="default" />
                 </article>
               </li>
             ))}
@@ -74,6 +76,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
                     <CurrencyIcon type="primary" />
                   </p>
                   <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
+                  <Counter count={1} size="default" />
                 </article>
               </li>
             ))}
