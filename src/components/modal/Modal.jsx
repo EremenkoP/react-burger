@@ -8,12 +8,9 @@ import style from './Modal.module.css';
 
 const modalsContainer = document.querySelector("#modals");
 
-
 const Modal = ({ onCloseClick, children, modalTitle}) => {
 
-
-
-  React.useEffect((onCloseClick) => {
+  React.useEffect(() => {
 
     const handleEscKeydown = (event) => {
       event.key === "Escape" && onCloseClick();

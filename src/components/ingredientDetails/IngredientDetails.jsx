@@ -1,4 +1,3 @@
-import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
 import style from './IngredientDetails.module.css';
 
 const IngredientDetails = ({ ingredient }) => {
@@ -20,8 +19,5 @@ const IngredientDetails = ({ ingredient }) => {
   )
 };
 
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropTypes.isRequired
-};
 
 export default IngredientDetails;
