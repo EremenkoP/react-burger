@@ -5,7 +5,7 @@ import IngredientDetails from "../ingredientDetails/IngredientDetails";
 import BurgerConstructor from "../burgerConstructor/burgerConstructor";
 import Modal from "../modal/Modal";
 import OrderDetails from "../orderDetails/OrderDetails";
-import {IngredientsContext} from "../services/allContext"
+import {IngredientsContext} from "../../services/allContext"
 
 import style from './App.module.css'
 
@@ -49,8 +49,7 @@ const App = () => {
 
   const handleOrderClick = () => {
     const ingredientsForOrder = ingredients.map((ingredient) => ingredient._id)
-    console.log (ingredientsForOrder)
-    fetch(`${URL}orders`, {
+     fetch(`${URL}orders`, {
       method: 'POST',
       headers: { "Content-Type": "application/json"},
        body: JSON.stringify({

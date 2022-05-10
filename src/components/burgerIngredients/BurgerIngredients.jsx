@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrencyIcon, Tab, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import {IngredientsContext} from "../services/allContext"
+import {IngredientsContext} from "../../services/allContext"
 
 import style from './BurgerIngredients.module.css'
 
@@ -90,19 +90,19 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
   );
 };
 
-// const ingredientPropTypes = PropTypes.shape({
-//   _id: PropTypes.string.isRequired,
-//   name:PropTypes.string.isRequired,
-//   type:PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-//   proteins:PropTypes.number.isRequired,
-//   fat:PropTypes.number.isRequired,
-//   carbohydrates:PropTypes.number.isRequired,
-//   calories:PropTypes.number.isRequired,
-//   price:PropTypes.number.isRequired,
-//   image:PropTypes.string.isRequired,
-//   image_mobile:PropTypes.string.isRequired,
-//   image_large:PropTypes.string.isRequired,
-// })
+const ingredientPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name:PropTypes.string.isRequired,
+  type:PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
+  proteins:PropTypes.number.isRequired,
+  fat:PropTypes.number.isRequired,
+  carbohydrates:PropTypes.number.isRequired,
+  calories:PropTypes.number.isRequired,
+  price:PropTypes.number.isRequired,
+  image:PropTypes.string.isRequired,
+  image_mobile:PropTypes.string.isRequired,
+  image_large:PropTypes.string.isRequired,
+})
 
 BurgerIngredients.propTypes = {
   openIngredientDetails: PropTypes.func.isRequired
@@ -110,4 +110,5 @@ BurgerIngredients.propTypes = {
 
 export default BurgerIngredients;
 
+export {ingredientPropTypes};
 

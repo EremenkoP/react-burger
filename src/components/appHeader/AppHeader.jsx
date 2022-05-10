@@ -3,7 +3,6 @@ import style from './AppHeader.module.css'
 
 const AppHeader = () => {
   return (
-    <>
       <header className={style.header + ' pt-4 pb-4'}>
         <nav className={style.header__nav}>
           <ul className={style.header__ul}>
@@ -26,7 +25,6 @@ const AppHeader = () => {
           </ul>
           </nav>
       </header>
-    </>
   )
 };
 
