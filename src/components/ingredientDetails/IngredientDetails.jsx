@@ -1,4 +1,5 @@
 import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
+
 import style from './IngredientDetails.module.css';
 
 const IngredientDetails = ({ ingredient }) => {

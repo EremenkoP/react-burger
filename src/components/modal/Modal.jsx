@@ -8,12 +8,9 @@ import style from './Modal.module.css';
 
 const modalsContainer = document.querySelector("#modals");
 
-
 const Modal = ({ onCloseClick, children, modalTitle}) => {
 
-
-
-  React.useEffect((onCloseClick) => {
+  React.useEffect(() => {
 
     const handleEscKeydown = (event) => {
       event.key === "Escape" && onCloseClick();
@@ -44,7 +41,7 @@ const Modal = ({ onCloseClick, children, modalTitle}) => {
 Modal.propTypes = {
   onCloseClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  modaleTitle: PropTypes.string.isRequired
+  modaleTitle: PropTypes.string
 };
 
 export default Modal;

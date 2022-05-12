@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
+import {IngredientsContext} from "../../services/allContext"
 
 import style from "./burgerConstructor.module.css"
-import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
+
 
 const Order = ({data, handleOrder}) => {
   const endPrice  = useMemo(() => data.reduce(
@@ -24,17 +26,21 @@ const Order = ({data, handleOrder}) => {
   )
 }
 
-const BurgerConstructor = ({ingredients, handleOrder}) => {
+const BurgerConstructor = ({ handleOrder }) => {
+
+  const ingredients = React.useContext(IngredientsContext)
+
+  const buns = ingredients.filter((ingredient)=> ingredient.type === "bun")
 
   return (
     <>
-    { ingredients[0] && (<div  key={ingredients[0]._id} className={" mr-4 " + style.element_top}>
+    { buns[0] && (<div className={" mr-4 " + style.element_top}>
       <ConstructorElement
       type="top"
       isLocked={true}
-      text={`${ingredients[0].name} (верх)`}
-      price={ingredients[0].price}
-      thumbnail={ingredients[0].image_mobile}
+      text={`${buns[0].name} (верх)`}
+      price={buns[0].price}
+      thumbnail={buns[0].image_mobile}
       />
     </div> )}
       <div className={" pr-2 "+style.container}>
@@ -42,26 +48,24 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
           {ingredients
             .filter((ingredient) => ingredient.type !== "bun")
             .map((ingredient) => (
-              <>
-                <div  key={ingredient._id} className={style.element}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image_mobile}
-                  />
-                </div>
-              </>
+              <div  key={ingredient._id} className={style.element}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={ingredient.name}
+                  price={ingredient.price}
+                  thumbnail={ingredient.image_mobile}
+                />
+              </div>
           ))}
         </div>
       </div>
-      { ingredients[0] && (<div  key={ingredients[0]._id} className={" mr-4 " + style.element_buttom}>
-        <ConstructorElement
+      { buns[0] && (<div className={" mr-4 " + style.element_buttom}>
+         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${ingredients[0].name} (низ)`}
-          price={ingredients[0].price}
-          thumbnail={ingredients[0].image_mobile}
+          text={`${buns[0].name} (низ)`}
+          price={buns[0].price}
+          thumbnail={buns[0].image_mobile}
         />
       </div>)}
       <Order data={ingredients} handleOrder={handleOrder}/>
@@ -70,8 +74,12 @@ const BurgerConstructor = ({ingredients, handleOrder}) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleOrder: PropTypes.func.isRequired,
 };
+
+Order.PropType = {
+  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  handleOrders: PropTypes.func.isRequired
+}
 
 export default BurgerConstructor;

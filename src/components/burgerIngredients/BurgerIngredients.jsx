@@ -1,6 +1,7 @@
 import React from "react";
-import { CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Tab, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import {IngredientsContext} from "../../services/allContext"
 
 import style from './BurgerIngredients.module.css'
 
@@ -21,7 +22,10 @@ const Tabs = () => {
   )
 }
 
-const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
+const BurgerIngredients = ({ openIngredientDetails }) => {
+
+  const ingredients = React.useContext(IngredientsContext)
+
   return (
     <>
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
@@ -40,6 +44,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
                     <CurrencyIcon type="primary" />
                   </p>
                   <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
+                  <Counter count={1} size="default" />
                 </article>
               </li>
             ))}
@@ -57,6 +62,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
                     <CurrencyIcon type="primary" />
                   </p>
                   <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
+                  <Counter count={1} size="default" />
                 </article>
               </li>
             ))}
@@ -74,6 +80,7 @@ const BurgerIngredients = ({ ingredients, openIngredientDetails }) => {
                     <CurrencyIcon type="primary" />
                   </p>
                   <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
+                  <Counter count={1} size="default" />
                 </article>
               </li>
             ))}
@@ -98,10 +105,10 @@ const ingredientPropTypes = PropTypes.shape({
 })
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   openIngredientDetails: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;
 
 export {ingredientPropTypes};
+
