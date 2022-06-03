@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
+import { useSelector } from 'react-redux'
 import PropTypes from "prop-types";
 import {ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+
 import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
-import {IngredientsContext} from "../../services/allContext"
 
 import style from "./burgerConstructor.module.css"
 
@@ -28,7 +29,7 @@ const Order = ({data, handleOrder}) => {
 
 const BurgerConstructor = ({ handleOrder }) => {
 
-  const ingredients = React.useContext(IngredientsContext)
+  const ingredients = useSelector(store=> store.ingredientsForBurger)
 
   const buns = ingredients.filter((ingredient)=> ingredient.type === "bun")
 

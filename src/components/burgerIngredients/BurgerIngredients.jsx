@@ -1,7 +1,7 @@
 import React from "react";
+import { useSelector } from 'react-redux'
 import { CurrencyIcon, Tab, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import {IngredientsContext} from "../../services/allContext"
 
 import style from './BurgerIngredients.module.css'
 
@@ -24,7 +24,7 @@ const Tabs = () => {
 
 const BurgerIngredients = ({ openIngredientDetails }) => {
 
-  const ingredients = React.useContext(IngredientsContext)
+  const ingredients = useSelector(store => store.ingredients)
 
   return (
     <>
