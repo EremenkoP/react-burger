@@ -19,14 +19,9 @@ const App = () => {
 
   const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = React.useState(false);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  const [currentIngredient, setCurrentIngredient] = React.useState({});
   const [orderNumber, setOrderNumber] = React.useState(0);
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
-
-  const closeModals = () => {
-    setIsIngredientDetailsOpened(false);
-  };
 
   const closeModalsOrder = () => {
     setIsOrderDetailsOpened(false);
@@ -51,8 +46,16 @@ const App = () => {
   }, []);
 
   const handleIngredientClick = (ingredient) => {
-    setCurrentIngredient(ingredient);
+    dispatch({
+      type: INGREDIENT_DETAILS,
+      data: ingredient
+    })
     setIsIngredientDetailsOpened(true);
+  };
+
+  const closeModals = () => {
+    setIsIngredientDetailsOpened(false);
+    dispatch({type: DETAILS_REMOVE})
   };
 
   const handleOrderClick = () => {
@@ -66,7 +69,10 @@ const App = () => {
     })
     .then((res) => getResponseData(res))
     .then((res) => {
-      setOrderNumber(res.order.number)
+      dispatch ({
+        type: ORDER,
+        data: res.order.number
+      })
       setIsOrderDetailsOpened(true)
     })
     .catch((res) => console.log(res))
@@ -92,12 +98,12 @@ const App = () => {
       </main>
       {isIngredientDetailsOpened && (
         <Modal onCloseClick={closeModals} modalTitle={"Детали ингредиента"}>
-          <IngredientDetails ingredient={currentIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
       {isOrderDetailsOpened && (
         <Modal onCloseClick={closeModalsOrder}>
-          <OrderDetails orderNumber={orderNumber}/>
+          <OrderDetails />
         </Modal>
       )}
     </>

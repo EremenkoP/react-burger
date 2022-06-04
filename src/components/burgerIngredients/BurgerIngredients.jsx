@@ -24,14 +24,15 @@ const Tabs = () => {
 
 const BurgerIngredients = ({ openIngredientDetails }) => {
 
-  const ingredients = useSelector(store => store.ingredients)
-    console.log(ingredients, 'ingredients')
+  const ingredients = useSelector(store => store.ingridientReducer.ingredients)
+
   return (
     <>
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
       <Tabs />
+
       { ingredients !== undefined ? (
-      <div className={style.ingredients}>
+      <div className={" pr-3 "+style.ingredients}>
         <h2 className={'text text_type_main-medium mt-10 mb-6'}>Булки</h2>
         <ul className={' ml-4 ' + style.ul}>
           {ingredients
@@ -86,8 +87,9 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
               </li>
             ))}
         </ul>
-      </div>) : (
-        <p className={'text text_type_main-large text_color_inactive mt-15'}>Секундочку, компонетны еще не&nbsp;разгрузили...</p>
+      </div>) : ( <>
+          {console.log(ingredients, 'ingredients')}
+        <p className={'text text_type_main-large text_color_inactive mt-15'}>Секундочку, ингредиенты еще не&nbsp;разгрузили...</p> </>
       )}
     </>
   );
@@ -114,4 +116,3 @@ BurgerIngredients.propTypes = {
 export default BurgerIngredients;
 
 export {ingredientPropTypes};
-

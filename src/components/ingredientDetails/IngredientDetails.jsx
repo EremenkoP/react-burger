@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
+
 import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
 
 import style from './IngredientDetails.module.css';
 
-const IngredientDetails = ({ ingredient }) => {
+const IngredientDetails = () => {
+
+  const ingredient = useSelector(store => store.ingridientReducer.ingredientDetail)
   return (
     <>
       <img src={ingredient.image_large} alt={ingredient.name} />

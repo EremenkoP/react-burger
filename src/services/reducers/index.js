@@ -3,8 +3,8 @@ import {GET_INGREDIENTS, GET_INGREDIENT_FOR_BURGER, INGREDIENT_DETAILS, DETAILS_
 const initialState = {
   ingredients: [],
   ingredientsForBurger: [],
-  ingredientDetail: null,
-  order: null
+  ingredientDetail: {},
+  order: {}
 }
 
 const ingridientReducer = (state = initialState, action) => {
@@ -30,7 +30,7 @@ const ingridientReducer = (state = initialState, action) => {
     case DETAILS_REMOVE:{
       return {
         ...state,
-        ingredientDetail: null
+        ingredientDetail: {}
       }
     }
     case ORDER:{
