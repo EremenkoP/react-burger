@@ -25,11 +25,12 @@ const Tabs = () => {
 const BurgerIngredients = ({ openIngredientDetails }) => {
 
   const ingredients = useSelector(store => store.ingredients)
-
+    console.log(ingredients, 'ingredients')
   return (
     <>
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
       <Tabs />
+      { ingredients !== undefined ? (
       <div className={style.ingredients}>
         <h2 className={'text text_type_main-medium mt-10 mb-6'}>Булки</h2>
         <ul className={' ml-4 ' + style.ul}>
@@ -85,7 +86,9 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
               </li>
             ))}
         </ul>
-      </div>
+      </div>) : (
+        <p className={'text text_type_main-large text_color_inactive mt-15'}>Секундочку, компонетны еще не&nbsp;разгрузили...</p>
+      )}
     </>
   );
 };

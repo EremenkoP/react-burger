@@ -22,7 +22,7 @@ const App = () => {
   const [currentIngredient, setCurrentIngredient] = React.useState({});
   const [orderNumber, setOrderNumber] = React.useState(0);
 
-  const ingredients = useSelector(store => store.ingredients)
+  const ingredients = useSelector(store => store.ingridientReducer.ingredients)
 
   const closeModals = () => {
     setIsIngredientDetailsOpened(false);
@@ -42,7 +42,7 @@ const App = () => {
         "Content-Type": "application/json"
       }
     })
-      .then((res) => {getResponseData(res)})
+      .then((res) => getResponseData(res))
       .then((res) => dispatch({
         type: GET_INGREDIENTS,
         data: res.data
@@ -75,18 +75,20 @@ const App = () => {
   return (
     <>
       <AppHeader />
-      {console.log(ingredients)}
       <main className={style.main}>
+      { ingredients.length !== 0 ? (
         <div className={style.content}>
-           <section>
-            <BurgerIngredients
-              openIngredientDetails={handleIngredientClick}
-            />
+          <section>
+            <BurgerIngredients openIngredientDetails={handleIngredientClick}/>
           </section>
           <section className={'ml-10 mt-25'}>
             <BurgerConstructor handleOrder={handleOrderClick} />
           </section>
         </div>
+        ) : (
+          <p className={'text text_type_main-large text_color_inactive mt-15'}>Минуточку, мы приземляемся...</p>
+        )
+      }
       </main>
       {isIngredientDetailsOpened && (
         <Modal onCloseClick={closeModals} modalTitle={"Детали ингредиента"}>

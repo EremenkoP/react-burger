@@ -27,49 +27,77 @@ const Order = ({data, handleOrder}) => {
   )
 }
 
+
+
 const BurgerConstructor = ({ handleOrder }) => {
 
   const ingredients = useSelector(store=> store.ingredientsForBurger)
+  //проверить чтобы работало правильно сортировка
+  const buns = (ingredients !== undefined && ingredients.includes(ingredients.type("bun"))) ? ingredients.filter((ingredient)=> ingredient.type === "bun") : false
+  const elseIngredients = ingredients !== undefined ?  ingredients.filter((ingredient) => ingredient.type !== 'bun') : false
 
-  const buns = ingredients.filter((ingredient)=> ingredient.type === "bun")
-
-  return (
+   return (
     <>
-    { buns[0] && (<div className={" mr-4 " + style.element_top}>
-      <ConstructorElement
-      type="top"
-      isLocked={true}
-      text={`${buns[0].name} (верх)`}
-      price={buns[0].price}
-      thumbnail={buns[0].image_mobile}
-      />
-    </div> )}
-      <div className={" pr-2 "+style.container}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {ingredients
-            .filter((ingredient) => ingredient.type !== "bun")
-            .map((ingredient) => (
-              <div  key={ingredient._id} className={style.element}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image_mobile}
-                />
-              </div>
-          ))}
+    { buns ?
+      (<div className={" mr-4 " + style.element_top}>
+        <ConstructorElement
+        type="top"
+        isLocked={true}
+        text={`${buns.name} (верх)`}
+        price={buns.price}
+        thumbnail={buns.image_mobile}
+        />
+      </div> )
+    :
+      (
+        <div className= { style.empty_buns__top}>
+          <p>Сделай выбор булочки</p>
         </div>
-      </div>
-      { buns[0] && (<div className={" mr-4 " + style.element_buttom}>
+      )
+    }
+
+      {elseIngredients ?
+        (<div className={" pr-2 "+style.container}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {elseIngredients
+              .filter((ingredient) => ingredient.type !== "bun")
+              .map((ingredient) => (
+                <div  key={ingredient._id} className={style.element}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    text={ingredient.name}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image_mobile}
+                  />
+                </div>))}
+          </div>
+        </div>)
+      :
+      (
+        <div className={"mt-3 mb-3 "+style.empty_elseIngredient}>
+          <p>Сделай выбор начинки </p>
+        </div>
+      )
+      }
+
+      { buns ?
+       (<div className={" mr-4 " + style.element_buttom}>
          <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${buns[0].name} (низ)`}
-          price={buns[0].price}
-          thumbnail={buns[0].image_mobile}
+          text={`${buns.name} (низ)`}
+          price={buns.price}
+          thumbnail={buns.image_mobile}
         />
-      </div>)}
-      <Order data={ingredients} handleOrder={handleOrder}/>
+      </div>)
+      :
+        (
+          <div className= { style.empty_buns__buttom}>
+            <p>Сделай выбор булочки</p>
+          </div>
+        )
+      }
+      {ingredients && (<Order data={ingredients} handleOrder={handleOrder}/>)}
     </>
   )
 }
