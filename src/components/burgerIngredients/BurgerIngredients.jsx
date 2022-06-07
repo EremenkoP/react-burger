@@ -1,23 +1,33 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 import { useSelector } from 'react-redux'
 import { CurrencyIcon, Tab, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
 import style from './BurgerIngredients.module.css'
 
-const Tabs = () => {
-  const [current, setCurrent] = React.useState('one')
+import {useInView} from '../../hooks/useInView'
+
+
+
+const Tabs = ({current,setCurrent}) => {
+
   return (
     <div style={{ display: 'flex' }}>
-      <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-      Булки
-      </Tab>
-      <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-      Соусы
-      </Tab>
-      <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-      Начинки
-      </Tab>
+      <a href="#buns" className={style.link}>
+        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+          Булки
+        </Tab>
+      </a>
+      <a href="#souse" className={style.link}>
+        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+          Соусы
+        </Tab>
+      </a>
+      <a href="#main" className={style.link}>
+        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+          Начинки
+        </Tab>
+      </a>
     </div>
   )
 }
@@ -26,14 +36,49 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
 
+  const [current, setCurrent] = React.useState('one')
+
+
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
+  const bunInView = useInView(bunRef)
+  const sauceInView = useInView(sauceRef)
+  const mainInView = useInView(mainRef)
+  const BUN = {key: 'one', value : 'Булки'};
+  const SAUCE = {key: 'two', value : 'Соусы'};
+  const MAIN = {key: 'three', value : 'Начинки'};
+  const INGREDIENT_GROUPS = [BUN, SAUCE, MAIN];
+  const refs = {
+    [BUN.key]: bunRef,
+    [SAUCE.key]: sauceRef,
+    [MAIN.key]: mainRef,
+  }
+
+  const setCurrentTab = (key) => {
+    setCurrent(INGREDIENT_GROUPS.filter(g => g.key === key)[0]);
+    refs[key].current.scrollIntoView({ block: "start", behavior: 'smooth' });
+  }
+
+  useEffect(() => {
+    if (bunInView) {
+      setCurrent('one')
+    } else if (sauceInView) {
+      setCurrent('two')
+    } else {
+      setCurrent('three')
+    }
+  }, [bunInView, sauceInView, mainInView])
+
   return (
     <>
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
-      <Tabs />
+
+      <Tabs current={current} setCurrent={setCurrentTab} />
 
       { ingredients !== undefined ? (
       <div className={" pr-3 "+style.ingredients}>
-        <h2 className={'text text_type_main-medium mt-10 mb-6'}>Булки</h2>
+        <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={bunRef}>Булки</h2>
         <ul className={' ml-4 ' + style.ul}>
           {ingredients
             .filter((ingredient) => ingredient.type === "bun")
@@ -51,7 +96,7 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
               </li>
             ))}
         </ul>
-        <h2 className={'text text_type_main-medium mt-10 mb-6'}>Соусы</h2>
+        <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={sauceRef}>Соусы</h2>
         <ul className={' ml-4 ' + style.ul}>
           {ingredients
             .filter((ingredient) => ingredient.type === "sauce")
@@ -69,7 +114,7 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
               </li>
             ))}
         </ul>
-        <h2 className={'text text_type_main-medium mt-10 mb-6'}>Начинки</h2>
+        <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={mainRef}>Начинки</h2>
         <ul className={' ml-4 ' + style.ul}>
           {ingredients
             .filter((ingredient) => ingredient.type === "main")
