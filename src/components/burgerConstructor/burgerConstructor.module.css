@@ -5,16 +5,6 @@
   max-width: 100%;
 }
 
-.element {
-  width: 100%;
-  display: grid;
-  gap: 13.5px;
-  grid-template-columns: min-content 1fr;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
 .element_top {
   grid-template-columns: 1fr;
   justify-content: flex-end;
@@ -83,4 +73,8 @@
   justify-content: center;
   width: 100%;
   text-align: center;
+}
+
+.droppable{
+  border: 2px dashed #8585AD;
 }

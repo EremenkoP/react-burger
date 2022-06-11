@@ -1,5 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AppHeader from "../appHeader/AppHeader";
 import BurgerIngredients from "../burgerIngredients/BurgerIngredients";
@@ -8,7 +10,7 @@ import BurgerConstructor from "../burgerConstructor/burgerConstructor";
 import Modal from "../modal/Modal";
 import OrderDetails from "../orderDetails/OrderDetails";
 
-import {GET_INGREDIENTS, GET_INGREDIENT_FOR_BURGER, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER} from '../../services/actions/index'
+import {GET_INGREDIENTS, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER} from '../../services/actions/index'
 
 import style from './App.module.css'
 
@@ -19,7 +21,6 @@ const App = () => {
 
   const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = React.useState(false);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  const [orderNumber, setOrderNumber] = React.useState(0);
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
 
@@ -82,19 +83,20 @@ const App = () => {
     <>
       <AppHeader />
       <main className={style.main}>
-      { ingredients.length !== 0 ? (
-        <div className={style.content}>
-          <section>
-            <BurgerIngredients openIngredientDetails={handleIngredientClick}/>
-          </section>
-          <section className={'ml-10 mt-25'}>
-            <BurgerConstructor handleOrder={handleOrderClick} />
-          </section>
-        </div>
-        ) : (
-          <p className={'text text_type_main-large text_color_inactive mt-15'}>Минуточку, мы приземляемся...</p>
-        )
-      }
+      <DndProvider backend={HTML5Backend}>
+        { ingredients.length !== 0 ? (
+          <div className={style.content}>
+
+              <BurgerIngredients openIngredientDetails={handleIngredientClick}/>
+
+              <BurgerConstructor handleOrder={handleOrderClick} />
+
+          </div>
+          ) : (
+            <p className={'text text_type_main-large text_color_inactive mt-15'}>Минуточку, мы стыкуемся...</p>
+          )
+        }
+      </DndProvider>
       </main>
       {isIngredientDetailsOpened && (
         <Modal onCloseClick={closeModals} modalTitle={"Детали ингредиента"}>

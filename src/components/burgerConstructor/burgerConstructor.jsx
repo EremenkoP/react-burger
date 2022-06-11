@@ -1,18 +1,19 @@
-import React, { useMemo } from "react";
-import { useSelector } from 'react-redux'
+import React from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from "prop-types";
-import {ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import {ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { v4 as uuid } from 'uuid'
+import { useDrop } from "react-dnd";
 
 import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
+import { ConstructorItem } from '../constructorItem/constructorItem';
+import {GET_INGREDIENT_FOR_BURGER, GET_BUN_FOR_BURGER, GET_FIRTH_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
 
 import style from "./burgerConstructor.module.css"
 
+const Order = ({bun, elseIngredients, handleOrder}) => {
 
-const Order = ({data, handleOrder}) => {
-  const endPrice  = useMemo(() => data.reduce(
-    (total, data) => total + data.price, 0), [data]
-  )
-
+  const endPrice  =  bun.price*2 + elseIngredients.reduce((accumulator, currentValue) => accumulator + currentValue.price,0);
 
   return (
     <div className={" mt-10 " + style.price}>
@@ -27,78 +28,102 @@ const Order = ({data, handleOrder}) => {
   )
 }
 
-
-
 const BurgerConstructor = ({ handleOrder }) => {
 
-  const ingredients = useSelector(store=> store.ingredientsForBurger)
-  //проверить чтобы работало правильно сортировка
-  const buns = (ingredients !== undefined && ingredients.includes(ingredients.type("bun"))) ? ingredients.filter((ingredient)=> ingredient.type === "bun") : false
-  const elseIngredients = ingredients !== undefined ?  ingredients.filter((ingredient) => ingredient.type !== 'bun') : false
+  const dispatch = useDispatch()
+
+  const ingredients = useSelector(store=> store.ingridientReducer.ingredientsForBurger);
+
+  const bun = ingredients.bun;
+  const elseIngredients = ingredients.elseIngregients
+
+  const addElseIngredients = (data) => {
+    const ingr = {...data.ingredient, 'uuid' : uuid()}
+    if (elseIngredients) {
+    elseIngredients.push(ingr);
+    dispatch({
+      type: GET_INGREDIENT_FOR_BURGER,
+      data: elseIngredients
+    })
+    } else {
+      dispatch({
+        type: GET_FIRTH_INGREDIENT_FOR_BURGER,
+        data: [ingr]
+      })
+    }
+  }
+
+  const [ {isHover }, dropTarget] = useDrop ({
+    accept: "ingredients",
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(dropIngredient) {
+      if (dropIngredient.ingredient.type === 'bun' ) {
+        dispatch({
+          type: GET_BUN_FOR_BURGER,
+          data: dropIngredient.ingredient
+        })
+      } else {
+        addElseIngredients(dropIngredient)
+      }
+  }})
 
    return (
-    <>
-    { buns ?
-      (<div className={" mr-4 " + style.element_top}>
-        <ConstructorElement
-        type="top"
-        isLocked={true}
-        text={`${buns.name} (верх)`}
-        price={buns.price}
-        thumbnail={buns.image_mobile}
-        />
-      </div> )
-    :
-      (
-        <div className= { style.empty_buns__top}>
-          <p>Сделай выбор булочки</p>
-        </div>
-      )
-    }
-
-      {elseIngredients ?
-        (<div className={" pr-2 "+style.container}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {elseIngredients
-              .filter((ingredient) => ingredient.type !== "bun")
-              .map((ingredient) => (
-                <div  key={ingredient._id} className={style.element}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image_mobile}
-                  />
-                </div>))}
-          </div>
-        </div>)
-      :
-      (
-        <div className={"mt-3 mb-3 "+style.empty_elseIngredient}>
-          <p>Сделай выбор начинки </p>
-        </div>
-      )
-      }
-
-      { buns ?
-       (<div className={" mr-4 " + style.element_buttom}>
-         <ConstructorElement
-          type="bottom"
+    <section className={`ml-10 mt-25 ${isHover && style.droppable}`}  ref={dropTarget}>
+      { bun ?
+        (<div className={" mr-4 " + style.element_top}>
+          <ConstructorElement
+          type="top"
           isLocked={true}
-          text={`${buns.name} (низ)`}
-          price={buns.price}
-          thumbnail={buns.image_mobile}
-        />
-      </div>)
+          text={`${bun.name} (верх)`}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
+          />
+        </div> )
       :
         (
-          <div className= { style.empty_buns__buttom}>
-            <p>Сделай выбор булочки</p>
+          <div className= { "mb-3 " + style.empty_buns__top}>
+            <p>Сделайте выбор булочки</p>
           </div>
         )
       }
-      {ingredients && (<Order data={ingredients} handleOrder={handleOrder}/>)}
-    </>
+      {elseIngredients ?
+        (<div className={" pr-2 "+style.container}>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px',  margin: 0, padding: 0 }}>
+            {elseIngredients
+              .map((ingredient, index) => (
+                <ConstructorItem ingredient={ingredient} index={index} key={ingredient.uuid}/>
+                ))}
+          </ul>
+        </div>)
+      :
+        (
+          <div className={style.empty_elseIngredient}>
+            <p>Сделайте выбор начинки </p>
+          </div>
+        )
+      }
+
+      { bun ?
+        (<div className={" mr-4 " + style.element_buttom}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
+          />
+        </div>)
+      :
+        (
+          <div className= {"mt-3 " + style.empty_buns__buttom}>
+            <p>Сделайте выбор булочки</p>
+          </div>
+        )
+      }
+        {bun && elseIngredients && (<Order elseIngredients={elseIngredients}  bun={bun} handleOrder={handleOrder}/>)}
+    </section>
   )
 }
 

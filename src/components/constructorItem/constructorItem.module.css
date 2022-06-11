@@ -1,0 +1,17 @@
+.dragging {
+  opacity: 0;
+}
+
+.dropping {
+  filter: grayscale(100);
+}
+
+.element {
+  width: 100%;
+  display: grid;
+  gap: 13.5px;
+  grid-template-columns: min-content 1fr;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
