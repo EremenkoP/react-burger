@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
+import { ingredientPropTypes } from "../../utils/constants";
 
 import style from './IngredientDetails.module.css';
 
@@ -26,7 +26,7 @@ const IngredientDetails = () => {
 };
 
 IngredientDetails.propTypes = {
-  ingredient: ingredientPropTypes.isRequired
+  ingredient: ingredientPropTypes
 };
 
 export default IngredientDetails;

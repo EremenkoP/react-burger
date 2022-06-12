@@ -1,8 +1,11 @@
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import {GET_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { useDrop,useDrag } from "react-dnd";
+import PropTypes from "prop-types";
+
+import { ingredientPropTypes } from "../../utils/constants";
+import {GET_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
 
 import style from './constructorItem.module.css'
 
@@ -68,5 +71,9 @@ const ConstructorItem = ({ingredient, index}) => {
   )
 }
 
+ConstructorItem.propTypes = {
+  ingredient: ingredientPropTypes.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export {ConstructorItem}

@@ -1,5 +1,8 @@
 import { CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
+
+import { ingredientPropTypes } from "../../utils/constants";
 
 import style from './burgerIngredientItem.module.css'
 
@@ -24,6 +27,11 @@ const BurgerIngredientItem = ({ingredient, count}) => {
       {count > 0 && (<Counter count={count} size="default" />)}
     </article>
   )
+}
+
+BurgerIngredientItem.PropType = {
+  ingredient: ingredientPropTypes.isRequired,
+  count: PropTypes.number.isRequired,
 }
 
 export {BurgerIngredientItem}

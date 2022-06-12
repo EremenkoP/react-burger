@@ -5,7 +5,8 @@ import {ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-dev
 import { v4 as uuid } from 'uuid'
 import { useDrop } from "react-dnd";
 
-import { ingredientPropTypes } from "../burgerIngredients/BurgerIngredients";
+import { ingredientPropTypes } from "../../utils/constants";
+
 import { ConstructorItem } from '../constructorItem/constructorItem';
 import {GET_INGREDIENT_FOR_BURGER, GET_BUN_FOR_BURGER, GET_FIRTH_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
 
@@ -132,7 +133,8 @@ BurgerConstructor.propTypes = {
 };
 
 Order.PropType = {
-  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  bun: ingredientPropTypes.isRequired,
+  elseIngredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleOrders: PropTypes.func.isRequired
 }
 

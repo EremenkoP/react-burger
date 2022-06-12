@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import PropTypes from "prop-types";
 
 import {BurgerIngredientItem} from '../burgerIngredientItem/burgerIngredientItem'
 
@@ -33,4 +34,10 @@ const BurgerIngredientGroup = ({ filterType, openIngredientDetails}) => {
     </>
   )
 }
+
+
+BurgerIngredientGroup.propTypes = {
+  filterType: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
+  openIngredientDetails: PropTypes.func.isRequired,
+};
 export {BurgerIngredientGroup}
