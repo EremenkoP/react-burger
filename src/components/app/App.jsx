@@ -10,12 +10,12 @@ import BurgerConstructor from "../burgerConstructor/burgerConstructor";
 import Modal from "../modal/Modal";
 import OrderDetails from "../orderDetails/OrderDetails";
 
-import {GET_INGREDIENTS, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER, REMOVE_INGREDIENT_FOR_BURGER  } from '../../services/actions/index'
+import { INGREDIENT_DETAILS, DETAILS_REMOVE } from '../../services/actions/index'
+import { getIngredients, pushOrder } from "../../services/actions/API";
 
 import style from './App.module.css'
 
 const App = () => {
-  const URL = "https://norma.nomoreparties.space/api/";
 
   const dispatch = useDispatch();
 
@@ -23,28 +23,15 @@ const App = () => {
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
+  const ingredientsForOrder = useSelector(store => store.ingridientReducer.ingredientsForBurger)
 
   const closeModalsOrder = () => {
     setIsOrderDetailsOpened(false);
   };
 
-  const getResponseData = (res) => {
-    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
-  };
-
   React.useEffect(() => {
-    fetch(`${URL}ingredients`, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then((res) => getResponseData(res))
-      .then((res) => dispatch({
-        type: GET_INGREDIENTS,
-        data: res.data
-      }))
-      .catch((res) => console.log(res))
-  }, []);
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   const handleIngredientClick = (ingredient) => {
     dispatch({
@@ -60,29 +47,10 @@ const App = () => {
   };
 
   const handleOrderClick = () => {
-    const ingredientsForOrder = ingredients.map((ingredient) => ingredient._id)
-     fetch(`${URL}orders`, {
-      method: 'POST',
-      headers: { "Content-Type": "application/json"},
-       body: JSON.stringify({
-        ingredients: ingredientsForOrder,
-      })
-    })
-    .then((res) => getResponseData(res))
-    .then((res) => {
-      dispatch ({
-        type: ORDER,
-        data: res.order.number
-      })
-      setIsOrderDetailsOpened(true)
-    })
-    .then(
-      dispatch ({
-        type: REMOVE_INGREDIENT_FOR_BURGER
-      })
-    )
-    .catch((res) => console.log(res))
-  };
+    const ingredientsOrder = ingredientsForOrder.elseIngregients.map((ingredient) => ingredient._id)
+    ingredientsOrder.unshift(ingredientsForOrder.bun._id)
+    dispatch(pushOrder(ingredientsOrder, setIsOrderDetailsOpened))
+    };
 
   return (
     <>
