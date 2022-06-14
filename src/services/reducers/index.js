@@ -1,4 +1,5 @@
-import {GET_INGREDIENTS, GET_INGREDIENT_FOR_BURGER, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER, GET_BUN_FOR_BURGER, GET_FIRTH_INGREDIENT_FOR_BURGER} from '../actions/index'
+import {GET_INGREDIENTS, GET_INGREDIENT_FOR_BURGER, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER, GET_BUN_FOR_BURGER,
+   GET_FIRTH_INGREDIENT_FOR_BURGER, REMOVE_INGREDIENT_FOR_BURGER} from '../actions/index'
 
 const initialState = {
   ingredients: [],
@@ -42,6 +43,16 @@ const ingridientReducer = (state = initialState, action) => {
         ingredientsForBurger: {
           ...state.ingredientsForBurger,
           bun: action.data
+        }
+      }
+    }
+    case REMOVE_INGREDIENT_FOR_BURGER: {
+      return {
+        ...state,
+        ingredientsForBurger: {
+          ...state.ingredientsForBurger,
+          bun: false,
+          elseIngregients: false
         }
       }
     }

@@ -1,7 +1,5 @@
 import { useSelector } from 'react-redux';
 
-import { ingredientPropTypes } from "../../utils/constants";
-
 import style from './IngredientDetails.module.css';
 
 const IngredientDetails = () => {
@@ -23,10 +21,6 @@ const IngredientDetails = () => {
       </div>
     </>
   )
-};
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropTypes
 };
 
 export default IngredientDetails;

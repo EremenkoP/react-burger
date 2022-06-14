@@ -1,5 +1,4 @@
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 
 import style from './OrderDetails.module.css'
@@ -17,10 +16,6 @@ const OrderDetails = () => {
     <p className={"text text_type_main-default mt-2 mb-30 text_color_inactive "+style.order}>Дождитесь готовности на орбитальной станции</p>
     </>
   )
-}
-
-OrderDetails.PropType = {
-  orderNumber: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

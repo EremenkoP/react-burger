@@ -91,7 +91,7 @@ const BurgerConstructor = ({ handleOrder }) => {
       }
       {elseIngredients ?
         (<div className={" pr-2 "+style.container}>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px',  margin: 0, padding: 0 }}>
+          <ul className={style.ul}>
             {elseIngredients
               .map((ingredient, index) => (
                 <ConstructorItem ingredient={ingredient} index={index} key={ingredient.uuid}/>

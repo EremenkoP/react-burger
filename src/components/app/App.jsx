@@ -10,7 +10,7 @@ import BurgerConstructor from "../burgerConstructor/burgerConstructor";
 import Modal from "../modal/Modal";
 import OrderDetails from "../orderDetails/OrderDetails";
 
-import {GET_INGREDIENTS, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER} from '../../services/actions/index'
+import {GET_INGREDIENTS, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER, REMOVE_INGREDIENT_FOR_BURGER  } from '../../services/actions/index'
 
 import style from './App.module.css'
 
@@ -76,6 +76,11 @@ const App = () => {
       })
       setIsOrderDetailsOpened(true)
     })
+    .then(
+      dispatch ({
+        type: REMOVE_INGREDIENT_FOR_BURGER
+      })
+    )
     .catch((res) => console.log(res))
   };
 
