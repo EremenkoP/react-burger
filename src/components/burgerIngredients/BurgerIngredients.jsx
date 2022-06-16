@@ -1,114 +1,77 @@
-import React from "react";
-import { CurrencyIcon, Tab, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {useRef, useEffect} from "react";
+import { useSelector } from 'react-redux'
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import {IngredientsContext} from "../../services/allContext"
+
+import { BurgerIngredientGroup } from "../burgerIngredientGroup/burgerIngredientGroup";
 
 import style from './BurgerIngredients.module.css'
 
-const Tabs = () => {
-  const [current, setCurrent] = React.useState('one')
-  return (
-    <div style={{ display: 'flex' }}>
-      <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-      Булки
-      </Tab>
-      <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-      Соусы
-      </Tab>
-      <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-      Начинки
-      </Tab>
-    </div>
-  )
-}
+import {useInView} from '../../hooks/useInView'
+import {BUN, SAUCE, MAIN, INGREDIENT_GROUPS} from '../../utils/constants'
 
 const BurgerIngredients = ({ openIngredientDetails }) => {
 
-  const ingredients = React.useContext(IngredientsContext)
+  const ingredients = useSelector(store => store.ingridientReducer.ingredients)
+
+  const [current, setCurrent] = React.useState('bun')
+
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
+
+  const bunInView = useInView(bunRef)
+  const sauceInView = useInView(sauceRef)
+  const mainInView = useInView(mainRef)
+
+  const refs = {
+    [BUN.key]: bunRef,
+    [SAUCE.key]: sauceRef,
+    [MAIN.key]: mainRef,
+  }
+
+  const setCurrentTab = (key) => {
+    setCurrent(INGREDIENT_GROUPS.filter(g => g.key === key)[0]);
+    refs[key].current.scrollIntoView({ block: "start", behavior: 'smooth' });
+  }
+
+  useEffect(() => {
+    if (bunInView) {
+      setCurrent('bun')
+    } else if (sauceInView) {
+      setCurrent('sauce')
+    } else {
+      setCurrent('main')
+    }
+  }, [bunInView, sauceInView, mainInView])
 
   return (
-    <>
+    <section>
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
-      <Tabs />
-      <div className={style.ingredients}>
-        <h2 className={'text text_type_main-medium mt-10 mb-6'}>Булки</h2>
-        <ul className={' ml-4 ' + style.ul}>
-          {ingredients
-            .filter((ingredient) => ingredient.type === "bun")
-            .map((ingredient) => (
-              <li  key={ingredient._id} onClick={() => openIngredientDetails(ingredient)}>
-                <article className={style.li}>
-                  <img src={ingredient.image} alt={`Изображение ${ingredient.name}`}  ></img>
-                  <p className={'text text_type_digits-default mt-1 mb-1 '}>
-                    {ingredient.price}  &nbsp;
-                    <CurrencyIcon type="primary" />
-                  </p>
-                  <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
-                  <Counter count={1} size="default" />
-                </article>
-              </li>
-            ))}
-        </ul>
-        <h2 className={'text text_type_main-medium mt-10 mb-6'}>Соусы</h2>
-        <ul className={' ml-4 ' + style.ul}>
-          {ingredients
-            .filter((ingredient) => ingredient.type === "sauce")
-            .map((ingredient) => (
-              <li key={ingredient._id}>
-                <article className={style.li} onClick={() => openIngredientDetails(ingredient)}>
-                  <img src={ingredient.image} alt={`Изображение ${ingredient.name}`}  ></img>
-                  <p className={'text text_type_digits-default mt-1 mb-1 '}>
-                    {ingredient.price} &nbsp;
-                    <CurrencyIcon type="primary" />
-                  </p>
-                  <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
-                  <Counter count={1} size="default" />
-                </article>
-              </li>
-            ))}
-        </ul>
-        <h2 className={'text text_type_main-medium mt-10 mb-6'}>Начинки</h2>
-        <ul className={' ml-4 ' + style.ul}>
-          {ingredients
-            .filter((ingredient) => ingredient.type === "main")
-            .map((ingredient) => (
-              <li key={ingredient._id}>
-                <article className={style.li} onClick={() => openIngredientDetails(ingredient)}>
-                  <img src={ingredient.image} alt={`Изображение ${ingredient.name}`}  ></img>
-                  <p className={'text text_type_digits-default mt-1 mb-1 '}>
-                    {ingredient.price} &nbsp;
-                    <CurrencyIcon type="primary" />
-                  </p>
-                  <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
-                  <Counter count={1} size="default" />
-                </article>
-              </li>
-            ))}
-        </ul>
-      </div>
-    </>
+
+      <ul className={style.ul}>
+        {INGREDIENT_GROUPS.map(g => (<li key={g.key}><Tab value={g.key} active={current === g.key} onClick={setCurrentTab}>{g.value}</Tab></li>))}
+      </ul>
+
+      { ingredients !== undefined ? (
+      <div className={" pr-3 "+style.ingredients}>
+        <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={bunRef}>Булки</h2>
+        <BurgerIngredientGroup filterType={'bun'} openIngredientDetails={openIngredientDetails}/>
+        <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={sauceRef}>Соусы</h2>
+        <BurgerIngredientGroup filterType={'sauce'} openIngredientDetails={openIngredientDetails}/>
+        <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={mainRef}>Начинки</h2>
+        <BurgerIngredientGroup filterType={'main'} openIngredientDetails={openIngredientDetails}/>
+      </div>) : ( <>
+          {console.log(ingredients, 'ingredients')}
+        <p className={'text text_type_main-large text_color_inactive mt-15'}>Секундочку, ингредиенты еще не&nbsp;разгрузили...</p> </>
+      )}
+
+    </section>
   );
 };
-
-const ingredientPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name:PropTypes.string.isRequired,
-  type:PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-  proteins:PropTypes.number.isRequired,
-  fat:PropTypes.number.isRequired,
-  carbohydrates:PropTypes.number.isRequired,
-  calories:PropTypes.number.isRequired,
-  price:PropTypes.number.isRequired,
-  image:PropTypes.string.isRequired,
-  image_mobile:PropTypes.string.isRequired,
-  image_large:PropTypes.string.isRequired,
-})
 
 BurgerIngredients.propTypes = {
   openIngredientDetails: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;
-
-export {ingredientPropTypes};
-
