@@ -62,7 +62,6 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
         <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={mainRef}>Начинки</h2>
         <BurgerIngredientGroup filterType={'main'} openIngredientDetails={openIngredientDetails}/>
       </div>) : ( <>
-          {console.log(ingredients, 'ingredients')}
         <p className={'text text_type_main-large text_color_inactive mt-15'}>Секундочку, ингредиенты еще не&nbsp;разгрузили...</p> </>
       )}
 
