@@ -1,0 +1,11 @@
+.input__container{
+  width: 100%;
+}
+
+.input__container > div {
+  width: 100%;
+}
+
+.input__container > div > div{
+  width: 100%;
+}
