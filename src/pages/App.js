@@ -7,6 +7,7 @@ import Login from './Login/Login';
 import Register from './Register/Register'
 import ForgotPassword from './ForgotPassword/ForgotPassword'
 import ResetPassword from './ResetPassword/ResetPassword'
+import Profile from './Profile/Profile';
 
 const App = () => {
   return (
@@ -27,6 +28,9 @@ const App = () => {
         </Route>
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
+        </Route>
+        <Route path="/profile" exact={true}>
+          <Profile />
         </Route>
         <Route path='*'>
           <Error/>

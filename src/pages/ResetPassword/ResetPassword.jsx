@@ -1,4 +1,5 @@
 import {Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Form from '../../components/form/form'
@@ -7,15 +8,17 @@ import InputContainer from '../../components/inputContainer/InputContainer'
 import style from "./ResetPassword.module.css"
 
 const ResetPassword =  () => {
+  const [secret, setSecret] = useState(true)
   return (
     <div className={style.content}>
       <Form title={'Восстановление пароля'} nameButton={'Сохранить'}>
       <InputContainer>
         <Input
-          type='password'
+          type={secret ? 'password' : 'text'}
           placeholder='Введите новый пароль'
-          icon= "ShowIcon"
+          icon= {!secret ? 'HideIcon' : 'ShowIcon'}
           size={"default"}
+          onIconClick= {() => {setSecret(!secret)}}
         />
       </InputContainer >
       <InputContainer>
