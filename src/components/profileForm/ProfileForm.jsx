@@ -1,9 +1,12 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useSelector } from 'react-redux';
 import InputContainer from '../inputContainer/InputContainer'
 
 import style from './ProfileForm.module.css'
 
 const ProfileForm = () => {
+  const user = useSelector(store=> store.authReducer.user);
+
   return (
     <div className={style.content}>
       <InputContainer>
@@ -11,7 +14,7 @@ const ProfileForm = () => {
           type='text'
           placeholder='Имя'
           size={"default"}
-          value={'Name'}
+          value={user.name}
           icon={'EditIcon'}
         />
       </InputContainer>
@@ -20,7 +23,7 @@ const ProfileForm = () => {
           type='text'
           placeholder='Логин'
           size={"default"}
-          value={'Логин'}
+          value={user.email }
           icon={'EditIcon'}
         />
       </InputContainer>

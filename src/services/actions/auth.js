@@ -1,0 +1,6 @@
+const GET_USER = 'GET_USER';
+const DELETE_USER = 'DELETE_USER';
+const IS_AUTH = 'IS_AUTH';
+const IS_UNAUTH= 'IS_UNAUTH'
+
+export {GET_USER, DELETE_USER, IS_AUTH ,IS_UNAUTH}

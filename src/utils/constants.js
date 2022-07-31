@@ -6,6 +6,8 @@ const MAIN = {key: 'main', value : 'Начинки'};
 
 const INGREDIENT_GROUPS = [BUN, SAUCE, MAIN];
 
+const URL = "https://norma.nomoreparties.space/api/";
+
 const ingredientPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name:PropTypes.string.isRequired,
@@ -20,4 +22,5 @@ const ingredientPropTypes = PropTypes.shape({
   image_large:PropTypes.string.isRequired,
 })
 
-export {BUN, SAUCE, MAIN, INGREDIENT_GROUPS, ingredientPropTypes}
+
+export {BUN, SAUCE, MAIN, INGREDIENT_GROUPS, ingredientPropTypes, URL}

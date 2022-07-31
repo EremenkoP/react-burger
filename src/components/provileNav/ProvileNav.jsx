@@ -13,7 +13,7 @@ const ProfileNav = () =>{
 
   const signOut = useCallback(
     () => {
-        history.replace({ pathname: '/login' });
+        history.replace({ pathname: '/profile' });
     },
     [history]
   );

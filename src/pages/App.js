@@ -17,6 +17,9 @@ const App = () => {
         <Route path="/" exact={true}>
           <Home/>
         </Route>
+        <Route path="/profile" exact={true}>
+          <Profile />
+        </Route>
         <Route path="/login" exact={true}>
           <Login/>
         </Route>
@@ -28,9 +31,6 @@ const App = () => {
         </Route>
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
-        </Route>
-        <Route path="/profile" exact={true}>
-          <Profile />
         </Route>
         <Route path='*'>
           <Error/>
