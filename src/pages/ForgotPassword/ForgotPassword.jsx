@@ -1,20 +1,37 @@
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import Form from '../../components/form/form'
 import InputContainer from '../../components/inputContainer/InputContainer'
+import { postEmailForPassword } from '../../services/actions/API'
 
 import style from "./ForgotPassword.module.css"
 
 const ForgotPassword =  () => {
+
+  const history = useHistory()
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState('')
+
+  const submitEmail = async (event) => {
+    event.preventDefault();
+    await dispatch(postEmailForPassword(email));
+    history.push('/reset-password')
+  }
+
   return (
     <div className={style.content}>
-      <Form title={'Восстановление пароля'} nameButton={'Восстановить'}>
+      <Form title={'Восстановление пароля'} nameButton={'Восстановить'} onClick={submitEmail}>
       <InputContainer>
         <Input
           type='email'
           placeholder='Укажите e-mail'
           size={"default"}
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
       </InputContainer>
       </Form>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -10,7 +10,9 @@ import Modal from "../../components/modal/Modal";
 import OrderDetails from "../../components/orderDetails/OrderDetails";
 
 import { INGREDIENT_DETAILS, DETAILS_REMOVE } from '../../services/actions/index'
-import { getIngredients, pushOrder } from "../../services/actions/API";
+import { getIngredients, pushOrder, getNewToken } from "../../services/actions/API";
+import { refreshToken } from "../../utils/constants";
+import { getCookie } from "../../utils/cookie";
 
 import style from './home.module.css'
 
@@ -29,6 +31,14 @@ const Home = () => {
 
     React.useEffect(() => {
       dispatch(getIngredients())
+    }, [dispatch]);
+
+    useEffect(() => {
+      const token =  getCookie(refreshToken)
+      if (token !== undefined) {
+        dispatch(getNewToken(token))
+        setInterval(getNewToken(token), 72000000)
+      }
     }, [dispatch]);
 
     const handleIngredientClick = (ingredient) => {

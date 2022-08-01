@@ -8,6 +8,9 @@ const INGREDIENT_GROUPS = [BUN, SAUCE, MAIN];
 
 const URL = "https://norma.nomoreparties.space/api/";
 
+const refreshToken = 'refreshToken'
+const accessToken = 'accessToken'
+
 const ingredientPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name:PropTypes.string.isRequired,
@@ -23,4 +26,4 @@ const ingredientPropTypes = PropTypes.shape({
 })
 
 
-export {BUN, SAUCE, MAIN, INGREDIENT_GROUPS, ingredientPropTypes, URL}
+export {BUN, SAUCE, MAIN, INGREDIENT_GROUPS, ingredientPropTypes, URL, refreshToken, accessToken}

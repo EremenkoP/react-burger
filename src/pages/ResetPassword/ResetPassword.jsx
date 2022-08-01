@@ -1,17 +1,32 @@
 import {Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import Form from '../../components/form/form'
 import InputContainer from '../../components/inputContainer/InputContainer'
+import { resetPassword } from '../../services/actions/API'
 
 import style from "./ResetPassword.module.css"
 
 const ResetPassword =  () => {
+
+  const dispatch = useDispatch();
+
   const [secret, setSecret] = useState(true)
+  const [password, setPassword] = useState('')
+  const [token, setToken] = useState('')
+
+  const submitResetPassword = async (event) =>{
+    event.preventDefault();
+    await dispatch(resetPassword(password, token));
+    setPassword('');
+    setToken('');
+  }
+
   return (
     <div className={style.content}>
-      <Form title={'Восстановление пароля'} nameButton={'Сохранить'}>
+      <Form title={'Восстановление пароля'} nameButton={'Сохранить'} onClick={submitResetPassword}>
       <InputContainer>
         <Input
           type={secret ? 'password' : 'text'}
@@ -19,6 +34,8 @@ const ResetPassword =  () => {
           icon= {!secret ? 'HideIcon' : 'ShowIcon'}
           size={"default"}
           onIconClick= {() => {setSecret(!secret)}}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
         />
       </InputContainer >
       <InputContainer>
@@ -26,6 +43,8 @@ const ResetPassword =  () => {
           type='text'
           placeholder='Введите код из письма'
           size={"default"}
+          value={token}
+          onChange={e => setToken(e.target.value)}
         />
       </InputContainer>
       </Form>

@@ -1,8 +1,9 @@
-import {GET_USER, DELETE_USER, IS_AUTH ,IS_UNAUTH} from '../actions/auth'
+import {GET_USER, DELETE_USER, IS_AUTH ,IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD_IS_RESET} from '../actions/auth'
 
 const authState = {
   user: {},
-  isAuth: false
+  isAuth: false,
+  resetPassword: false
 }
 
 const authReducer = (state = authState, action) => {
@@ -29,6 +30,18 @@ const authReducer = (state = authState, action) => {
       return{
         ...state,
         isAuth: false
+      }
+    }
+    case TRY_RESET_PASSWORD: {
+      return{
+        ...state,
+        resetPassword: true
+      }
+    }
+    case PASSWORD_IS_RESET: {
+      return {
+        ...state,
+        resetPassword: false
       }
     }
     default: {

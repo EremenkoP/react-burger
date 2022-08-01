@@ -1,5 +1,10 @@
 import { useCallback } from "react";
 import { NavLink, useLocation, useHistory} from "react-router-dom"
+import { useDispatch } from 'react-redux';
+
+import { logOut } from "../../services/actions/API";
+import { refreshToken } from "../../utils/constants";
+import { getCookie } from "../../utils/cookie";
 
 import style from './ProfileNav.module.css'
 
@@ -7,15 +12,17 @@ const ProfileNav = () =>{
 
   const location = useLocation()
   const history = useHistory();
+  const dispatch = useDispatch()
 
   const isProfile = location.pathname === `/profile`
   const isOrders = location.pathname.startsWith('/profile/orders')
 
   const signOut = useCallback(
-    () => {
-        history.replace({ pathname: '/profile' });
+    async () => {
+      await dispatch(logOut(getCookie(refreshToken)))
+      history.replace({ pathname: '/profile' });
     },
-    [history]
+    [history, dispatch]
   );
 
   return (

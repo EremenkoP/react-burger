@@ -1,6 +1,6 @@
 import {Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 
 import Form from '../../components/form/form'
@@ -14,20 +14,13 @@ const Login =  () => {
   const dispatch = useDispatch();
   const history = useHistory()
 
-  const isAuth = useSelector(store => store.authReducer.isAuth)
-
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
 
-  useEffect(() => {
-    if(isAuth) {
-      history.push('/')
-    }
-  }, [history, isAuth])
-
-  const submitAutorization = (event) => {
+  const submitAutorization = async (event) => {
     event.preventDefault();
-    dispatch(  autorizationUser(email, password))
+    await dispatch(autorizationUser(email, password))
+    history.push('/')
   }
 
   return (
