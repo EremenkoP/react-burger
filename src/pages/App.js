@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import AppHeader from '../components/appHeader/AppHeader';
@@ -10,16 +10,21 @@ import ForgotPassword from './ForgotPassword/ForgotPassword'
 import ResetPassword from './ResetPassword/ResetPassword'
 import Profile from './Profile/Profile';
 import { ProtectedRoute } from '../components/protectedRoute';
+import IngridientDetails from './IngridientDetails/IngridientDetails';
 
 const App = () => {
+
+  const location = useLocation();
 
   const isAuth = useSelector(state => state.authReducer.isAuth)
   const resetPassword = useSelector(state => state.authReducer.resetPassword)
 
+  const background = location.state?.background;
+
   return (
-    <Router>
+    <>
       <AppHeader />
-      <Switch>
+      <Switch location={background || location}>
         <Route path="/" exact={true}>
           <Home/>
         </Route>
@@ -42,7 +47,12 @@ const App = () => {
           <Error/>
         </Route>
       </Switch>
-    </Router>
+      {background && (
+        <Route path='/ingredients/:id'>
+          <IngridientDetails />
+        </Route>
+      )}
+  </>
   )
 }
 

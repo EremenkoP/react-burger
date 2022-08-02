@@ -5,7 +5,7 @@ import {BurgerIngredientItem} from '../burgerIngredientItem/burgerIngredientItem
 
 import style from './burgerIngredientGroup.module.css'
 
-const BurgerIngredientGroup = ({ filterType, openIngredientDetails}) => {
+const BurgerIngredientGroup = ({ filterType }) => {
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
   const ingredientsForBurger = useSelector(store=> store.ingridientReducer.ingredientsForBurger);
@@ -26,7 +26,7 @@ const BurgerIngredientGroup = ({ filterType, openIngredientDetails}) => {
           {ingredients
             .filter((ingredient) => ingredient.type === filterType)
             .map((ingredient) => (
-              <li  key={ingredient._id} onClick={() => openIngredientDetails(ingredient)} >
+              <li  key={ingredient._id} >
                 <BurgerIngredientItem ingredient={ingredient} count={count(ingredient)}/>
               </li>
             ))}
@@ -38,6 +38,6 @@ const BurgerIngredientGroup = ({ filterType, openIngredientDetails}) => {
 
 BurgerIngredientGroup.propTypes = {
   filterType: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-  openIngredientDetails: PropTypes.func.isRequired,
 };
+
 export {BurgerIngredientGroup}

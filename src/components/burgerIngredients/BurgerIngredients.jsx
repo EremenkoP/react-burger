@@ -1,7 +1,6 @@
 import React, {useRef, useEffect} from "react";
 import { useSelector } from 'react-redux'
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
 import { BurgerIngredientGroup } from "../burgerIngredientGroup/burgerIngredientGroup";
 
@@ -10,7 +9,7 @@ import style from './BurgerIngredients.module.css'
 import {useInView} from '../../hooks/useInView'
 import {BUN, SAUCE, MAIN, INGREDIENT_GROUPS} from '../../utils/constants'
 
-const BurgerIngredients = ({ openIngredientDetails }) => {
+const BurgerIngredients = () => {
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
 
@@ -56,21 +55,17 @@ const BurgerIngredients = ({ openIngredientDetails }) => {
       { ingredients !== undefined ? (
       <div className={" pr-3 "+style.ingredients}>
         <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={bunRef}>Булки</h2>
-        <BurgerIngredientGroup filterType={'bun'} openIngredientDetails={openIngredientDetails}/>
+        <BurgerIngredientGroup filterType={'bun'} />
         <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={sauceRef}>Соусы</h2>
-        <BurgerIngredientGroup filterType={'sauce'} openIngredientDetails={openIngredientDetails}/>
+        <BurgerIngredientGroup filterType={'sauce'} />
         <h2 className={'text text_type_main-medium mt-10 mb-6'} ref={mainRef}>Начинки</h2>
-        <BurgerIngredientGroup filterType={'main'} openIngredientDetails={openIngredientDetails}/>
+        <BurgerIngredientGroup filterType={'main'} />
       </div>) : ( <>
         <p className={'text text_type_main-large text_color_inactive mt-15'}>Секундочку, ингредиенты еще не&nbsp;разгрузили...</p> </>
       )}
 
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  openIngredientDetails: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;
