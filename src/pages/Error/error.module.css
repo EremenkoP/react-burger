@@ -1,0 +1,13 @@
+.content {
+  margin: 5% auto 0;
+  max-width: 75%;
+  height: 65vh;
+  text-align: center;
+  background-image: url('../../image/404.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.text {
+  margin-top: 375px;
+}
