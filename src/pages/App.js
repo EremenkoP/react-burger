@@ -12,10 +12,12 @@ import ResetPassword from './ResetPassword/ResetPassword'
 import Profile from './Profile/Profile';
 import { ProtectedRoute } from '../components/protectedRoute';
 import IngridientDetails from './IngridientDetails/IngridientDetails';
+import IngredientPage from './IngredientPage/IngredientPage';
 
 import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
+
 
 const App = () => {
 
@@ -44,7 +46,7 @@ const App = () => {
           <Home/>
         </Route>
         <Route path='/ingredients/:id'>
-          <IngridientDetails />
+          <IngredientPage />
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
           <Profile />
