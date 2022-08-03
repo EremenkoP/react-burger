@@ -1,5 +1,6 @@
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import AppHeader from '../components/appHeader/AppHeader';
 import Home from './Home/home';
@@ -12,14 +13,28 @@ import Profile from './Profile/Profile';
 import { ProtectedRoute } from '../components/protectedRoute';
 import IngridientDetails from './IngridientDetails/IngridientDetails';
 
+import { getIngredients, getNewToken, getUser} from '../services/actions/API';
+import { accessToken, refreshToken } from "../utils/constants";
+import { getCookie } from "../utils/cookie";
+
 const App = () => {
 
   const location = useLocation();
+  const dispatch = useDispatch()
 
   const isAuth = useSelector(state => state.authReducer.isAuth)
   const resetPassword = useSelector(state => state.authReducer.resetPassword)
 
   const background = location.state?.background;
+
+  useEffect(() => {
+    dispatch(getIngredients());
+    const token =  getCookie(refreshToken)
+    if (token !== undefined) {
+      dispatch(getNewToken(token))
+      dispatch(getUser(getCookie(accessToken)))
+    }
+  }, [dispatch]);
 
   return (
     <>
@@ -27,6 +42,9 @@ const App = () => {
       <Switch location={background || location}>
         <Route path="/" exact={true}>
           <Home/>
+        </Route>
+        <Route path='/ingredients/:id'>
+          <IngridientDetails />
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
           <Profile />

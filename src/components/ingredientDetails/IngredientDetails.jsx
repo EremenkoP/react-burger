@@ -1,10 +1,24 @@
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import style from './IngredientDetails.module.css';
 
 const IngredientDetails = () => {
 
-  const ingredient = useSelector(store => store.ingridientReducer.ingredientDetail)
+  let ingredient = useSelector(store => store.ingridientReducer.ingredientDetail);
+  const ingredients = useSelector(store => store.ingridientReducer.ingredients);
+
+  const local = useLocation();
+
+  if(Object.keys(ingredient).length === 0) {
+    const id =  local.pathname.split('/ingredients/')[1]
+    ingredients.map(el => {
+      if (el._id === id) {
+        ingredient = el
+      }
+    })
+  }
+
   return (
     <>
       <img src={ingredient.image_large} alt={ingredient.name} />

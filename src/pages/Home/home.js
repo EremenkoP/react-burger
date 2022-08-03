@@ -10,7 +10,7 @@ import BurgerConstructor from "../../components/burgerConstructor/burgerConstruc
 import Modal from "../../components/modal/Modal";
 import OrderDetails from "../../components/orderDetails/OrderDetails";
 
-import { getIngredients, pushOrder, getNewToken } from "../../services/actions/API";
+import { pushOrder, getNewToken } from "../../services/actions/API";
 import { refreshToken } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
 
@@ -29,10 +29,6 @@ const Home = () => {
     const closeModalsOrder = () => {
       setIsOrderDetailsOpened(false);
     };
-
-    React.useEffect(() => {
-      dispatch(getIngredients())
-    }, [dispatch]);
 
     useEffect(() => {
       const token =  getCookie(refreshToken)

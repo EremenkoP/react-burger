@@ -1,6 +1,9 @@
-import { Redirect, Route } from "react-router-dom"
+import { Redirect, Route, useLocation } from "react-router-dom"
 
 const ProtectedRoute = ({children, logistic, path, toRedirect, ...rest}) => {
+
+  const location = useLocation()
+  console.log(location)
 
   return (
     <Route
@@ -10,7 +13,7 @@ const ProtectedRoute = ({children, logistic, path, toRedirect, ...rest}) => {
         logistic ?
           children
         :
-        <Redirect to={toRedirect} />
+        <Redirect  to={{ pathname: toRedirect, state: { from: location } }} />
       }
     />
   )
