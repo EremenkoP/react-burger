@@ -7,6 +7,7 @@ const MAIN = {key: 'main', value : 'Начинки'};
 const INGREDIENT_GROUPS = [BUN, SAUCE, MAIN];
 
 const URL = "https://norma.nomoreparties.space/api/";
+const WSS = 'wss://norma.nomoreparties.space/orders'
 
 const refreshToken = 'refreshToken'
 const accessToken = 'accessToken'
@@ -26,4 +27,4 @@ const ingredientPropTypes = PropTypes.shape({
 })
 
 
-export {BUN, SAUCE, MAIN, INGREDIENT_GROUPS, ingredientPropTypes, URL, refreshToken, accessToken}
+export {BUN, SAUCE, MAIN, INGREDIENT_GROUPS, ingredientPropTypes, URL, refreshToken, accessToken, WSS}

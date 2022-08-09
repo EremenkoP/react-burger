@@ -1,0 +1,29 @@
+.box {
+  width: 100%;
+}
+
+.orders{
+  width: 100%;
+  display: grid;
+  grid-template-areas: "ready inWork" "numberReady numberInWork";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content minmax(min-content, 1fr);
+  gap: 24px 36px
+}
+
+.ready{
+  grid-area: 'ready';
+}
+
+.inWork{
+  grid-area: 'inWork';
+}
+
+.numberReady{
+  grid-area: 'numberReady';
+}
+
+.numberInWork{
+  grid-area: 'numberInWork';
+}
+
