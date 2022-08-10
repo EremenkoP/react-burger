@@ -17,6 +17,7 @@ import IngredientPage from './IngredientPage/IngredientPage';
 import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
+import Feed from './Feed/Feed';
 
 
 const App = () => {
@@ -47,6 +48,9 @@ const App = () => {
         </Route>
         <Route path='/ingredients/:id'>
           <IngredientPage />
+        </Route>
+        <Route path='/feed'>
+          <Feed />
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
           <Profile />
