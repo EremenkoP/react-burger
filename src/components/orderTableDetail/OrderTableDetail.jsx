@@ -19,14 +19,14 @@ const OrderTableDetail = () => {
   let ingredientsInOrder = [];
 
   const orderId =  local.pathname.split('/feed/')[1];
-  orders.map(el => {
+  orders.forEach(el => {
     if (el._id === orderId) {
       order = el
     }
   });
 
-  order.ingredients.map(id => {
-    ingredients.map(ingredient => {
+  order.ingredients.forEach(id => {
+    ingredients.forEach(ingredient => {
       if (ingredient._id === id) {
         ingredientsInOrder.push(ingredient)
       }

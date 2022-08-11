@@ -12,7 +12,7 @@ const IngredientDetails = () => {
 
   if(Object.keys(ingredient).length === 0) {
     const id =  local.pathname.split('/ingredients/')[1]
-    ingredients.map(el => {
+    ingredients.forEach(el => {
       if (el._id === id) {
         ingredient = el
       }

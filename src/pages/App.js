@@ -13,12 +13,14 @@ import Profile from './Profile/Profile';
 import { ProtectedRoute } from '../components/protectedRoute';
 import IngridientDetails from './IngridientDetails/IngridientDetails';
 import IngredientPage from './IngredientPage/IngredientPage';
+import Feed from './Feed/Feed';
+import OrderDetails from './OrderDetails/OrderDetails';
+import OrderPage from './OrderPage/OrderPage';
 
 import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
-import Feed from './Feed/Feed';
-import OrderDetails from './OrderDetails/OrderDetails';
+
 
 
 const App = () => {
@@ -59,7 +61,7 @@ const App = () => {
           <Feed />
         </Route>
         <Route path='/feed/:id'>
-          <OrderDetails />
+          <OrderPage />
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
           <Profile />
