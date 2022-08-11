@@ -1,6 +1,6 @@
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import AppHeader from '../components/appHeader/AppHeader';
 import Home from './Home/home';
@@ -18,6 +18,7 @@ import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
 import Feed from './Feed/Feed';
+import OrderDetails from './OrderDetails/OrderDetails';
 
 
 const App = () => {
@@ -30,14 +31,19 @@ const App = () => {
 
   const background = location.state?.background;
 
+  const autoAuth = useCallback( async (token) => {
+    await dispatch(getNewToken(token))
+    await dispatch(getUser(getCookie(accessToken)))
+  }, [dispatch]
+  )
+
   useEffect(() => {
     dispatch(getIngredients());
     const token =  getCookie(refreshToken)
     if (token !== undefined) {
-      dispatch(getNewToken(token))
-      dispatch(getUser(getCookie(accessToken)))
+      autoAuth(token)
     }
-  }, [dispatch]);
+  }, [dispatch, autoAuth]);
 
   return (
     <>
@@ -49,8 +55,11 @@ const App = () => {
         <Route path='/ingredients/:id'>
           <IngredientPage />
         </Route>
-        <Route path='/feed'>
+        <Route path='/feed' exact={true}>
           <Feed />
+        </Route>
+        <Route path='/feed/:id'>
+          <OrderDetails />
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
           <Profile />
@@ -74,6 +83,11 @@ const App = () => {
       {background && (
         <Route path='/ingredients/:id'>
           <IngridientDetails />
+        </Route>
+      )}
+      {background && (
+        <Route path='/feed/:id'>
+          <OrderDetails />
         </Route>
       )}
   </>

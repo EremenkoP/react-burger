@@ -24,3 +24,47 @@
 .done{
   color: #00CCCC;
 }
+
+.cansel {
+  color: red;
+}
+
+.images {
+  position: relative;
+  height: 64px;
+}
+
+.imageList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.imageContainer {
+  border-radius: 100%;
+  background: linear-gradient(to right, #801AB2, #4C4CFF);
+  padding: 2px;
+}
+
+.image {
+  width: 64px;
+  height: 64px;
+  display: block;
+  object-fit: cover;
+  background-color: var(--background-alt);
+  border-radius: 100px;
+}
+
+.fakeImage {
+  padding: 2px;
+  position: absolute;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(28, 28, 33, .6);
+}

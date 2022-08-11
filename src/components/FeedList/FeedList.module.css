@@ -4,8 +4,14 @@
   margin: 0;
   max-height: 80vh;
   overflow: auto;
+  display: grid;
 }
 
 .li:first-child{
  margin: 0;
+}
+
+.link{
+  text-decoration: none;
+  color: inherit;
 }

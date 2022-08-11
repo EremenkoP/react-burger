@@ -3,7 +3,6 @@ import { Redirect, Route, useLocation } from "react-router-dom"
 const ProtectedRoute = ({children, logistic, path, toRedirect, ...rest}) => {
 
   const location = useLocation()
-  console.log(location)
 
   return (
     <Route

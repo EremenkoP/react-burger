@@ -24,11 +24,14 @@ const getIngredients = () => {
   }
 }
 // отправка заказа
-const pushOrder = (ingredientsForOrder, setIsOrderDetailsOpened) => {
+const pushOrder = (ingredientsForOrder,  token) => {
   return async function(dispatch) {
     await fetch(`${URL}orders`, {
       method: 'POST',
-      headers: { "Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        authorization: 'Bearer ' + token
+      },
       body: JSON.stringify({
         ingredients: ingredientsForOrder,
       })
@@ -39,7 +42,6 @@ const pushOrder = (ingredientsForOrder, setIsOrderDetailsOpened) => {
         type: ORDER,
         data: res.order.number
       })
-      setIsOrderDetailsOpened(true)
     })
     .then(
       dispatch ({
