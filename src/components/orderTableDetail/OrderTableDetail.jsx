@@ -14,17 +14,20 @@ const OrderTableDetail = () => {
 
   const orders = useSelector(state => state.wsReducerAll.data.orders);
   const ingredients = useSelector(store => store.ingridientReducer.ingredients);
+  let order = useSelector(store=> store.orderReducer.order)
 
-  let order;
   let ingredientsInOrder = [];
 
-  const orderId =  local.pathname.split('/feed/')[1];
-  orders.forEach(el => {
-    if (el._id === orderId) {
-      order = el
-    }
-  });
+  if(Object.keys(order).length === 0 && orders) {
+    const orderId =  local.pathname.split('/feed/')[1];
+    orders.forEach(el => {
+      if (el._id === orderId) {
+        order = el
+      }
+    });
+  }
 
+if(Object.keys(order).length !== 0 && orders) {
   order.ingredients.forEach(id => {
     ingredients.forEach(ingredient => {
       if (ingredient._id === id) {
@@ -32,6 +35,7 @@ const OrderTableDetail = () => {
       }
     })
   })
+}
 
   const count = (ingredient) => {
     if (ingredient.type === 'bun') {
@@ -47,6 +51,8 @@ const OrderTableDetail = () => {
 
   return(
     <div className={style.content}>
+    {Object.keys(order).length !== 0 ? (
+      <>
       <h4 className={'text text_type_digits-default '+ style.number}>{order.number}</h4>
       <p className='text text_type_main-medium mt-10 mb-3'>{order.name}</p>
       <span className={`text text_type_main-medium mt-3 mb-15 ${order.status === statusDone.key ? style.done : order.status === statusCancel.key ? style.cansel :''}`}>
@@ -70,6 +76,10 @@ const OrderTableDetail = () => {
         <p className="text text_type_main-small text_color_inactive">{formatOrderDate(order.createdAt)}</p>
         <p className={'text text_type_digits-default '}>{price} <CurrencyIcon type="primary" /></p>
       </div>
+      </>
+    ) : (
+      <p className='text text_type_main-large text_color_inactive'>Одно мгновение, мы достает ваш заказ из архивов...</p>
+    )}
     </div>
   )
 }

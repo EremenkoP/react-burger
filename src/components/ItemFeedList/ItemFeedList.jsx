@@ -1,14 +1,17 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMemo } from 'react';
 
 import { formatOrderDate } from '../../utils/date';
 import {statusDone, statusMap} from "../../utils/constants";
 
 import style from './ItemFeedList.module.css'
+import { GET_ORDER_DETAILS } from '../../services/actions/orderDetail';
 
 
 const ItemFeedList = ({order, isPersonal}) => {
+
+  const dispatch = useDispatch()
 
   const ingredients = useSelector(store => store.ingridientReducer.ingredients)
   const len = order.ingredients ? order.ingredients.length : 0
@@ -25,8 +28,15 @@ const ItemFeedList = ({order, isPersonal}) => {
     }, 0),
     [order.ingredients, ingredients]
   )
+
+  const handleClick = () => {
+    dispatch({
+      type: GET_ORDER_DETAILS,
+      data: order
+    })
+  }
   return (
-    <article  className={'p-6 ' + style.box}>
+    <article  className={'p-6 ' + style.box} onClick={handleClick}>
       <div className={style.number__box}>
         <span className={'text text_type_digits-default'}>{`#${order.number}`}</span>
         <span className={'text text_type_main-default text_color_inactive'}>{formatOrderDate(order.createdAt)}</span>
