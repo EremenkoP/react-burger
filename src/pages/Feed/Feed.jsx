@@ -15,7 +15,7 @@ const Feed = () => {
           <h2 className={"text text_type_main-large " + style.title}>
             Лента заказов
           </h2>
-          <FeedList className={style.list} orders={ordersData.orders} />
+          <FeedList className={style.list} orders={ordersData.orders} isPersonal={false}/>
           <OrderTable data={ordersData} className={style.table} />
         </div>
       ) : (

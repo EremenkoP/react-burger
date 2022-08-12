@@ -12,14 +12,19 @@ const OrderTableDetail = () => {
 
   const local = useLocation()
 
-  const orders = useSelector(state => state.wsReducerAll.data.orders);
+  let orders = useSelector(state => state.wsReducerAll.data.orders);
   const ingredients = useSelector(store => store.ingridientReducer.ingredients);
   let order = useSelector(store=> store.orderReducer.order)
+  const authOrders = useSelector(state => state.wsReducerAuth.orders)
 
   let ingredientsInOrder = [];
 
   if(Object.keys(order).length === 0 && orders) {
-    const orderId =  local.pathname.split('/feed/')[1];
+    let orderId =  local.pathname.split('/feed/')[1];
+    if (orderId === undefined) {
+      orderId = local.pathname.split('/profile/')[1]
+      orders = authOrders
+    }
     orders.forEach(el => {
       if (el._id === orderId) {
         order = el
@@ -78,7 +83,7 @@ if(Object.keys(order).length !== 0 && orders) {
       </div>
       </>
     ) : (
-      <p className='text text_type_main-large text_color_inactive'>Одно мгновение, мы достает ваш заказ из архивов...</p>
+      <p className='text text_type_main-large text_color_inactive'>Одно мгновение, мы достаем ваш заказ из архивов...</p>
     )}
     </div>
   )

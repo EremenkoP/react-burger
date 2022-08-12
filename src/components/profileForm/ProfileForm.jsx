@@ -16,6 +16,7 @@ const ProfileForm = () => {
   const dispatch= useDispatch()
 
   const user = useSelector(store=> store.authReducer.user);
+
   const [name, setName] = useState(user.name)
   const [disName, setDisName] = useState(true)
   const [email, setEmail] = useState(user.email)

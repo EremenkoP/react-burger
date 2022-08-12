@@ -4,13 +4,13 @@ import ItemFeedList from "../ItemFeedList/ItemFeedList"
 
 import style from './FeedList.module.css'
 
-const FeedList = ({className, orders}) => {
+const FeedList = ({className, orders, isPersonal}) => {
 
   const location = useLocation()
 
   return(
     <ul className={`${style.ul} ${className} `}>
-      {orders.map((order, index) => (
+      {orders.map((order) => (
       <li className={'mt-2 ' + style.li} key={order._id}>
         <Link className={ style.link}
         to={{
@@ -19,7 +19,7 @@ const FeedList = ({className, orders}) => {
         }}
         >
 
-            <ItemFeedList order={order} isPersonal={false}/>
+        <ItemFeedList order={order} isPersonal={isPersonal}/>
 
         </Link> </li>
       ))}

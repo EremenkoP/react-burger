@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   position: fixed;
-  z-index: 4;
+  z-index: 101;
   flex-direction: column;
   width: 50%;
   top: 15%;

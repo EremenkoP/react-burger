@@ -20,8 +20,7 @@ import OrderPage from './OrderPage/OrderPage';
 import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
-
-
+import { WS_AUTH_START } from '../services/actions/WSauth';
 
 const App = () => {
 
@@ -44,6 +43,7 @@ const App = () => {
     const token =  getCookie(refreshToken)
     if (token !== undefined) {
       autoAuth(token)
+      dispatch({type: WS_AUTH_START})
     }
   }, [dispatch, autoAuth]);
 
@@ -61,6 +61,9 @@ const App = () => {
           <Feed />
         </Route>
         <Route path='/feed/:id'>
+          <OrderPage />
+        </Route>
+        <Route path='/profile/orders/:id'>
           <OrderPage />
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
@@ -89,6 +92,11 @@ const App = () => {
       )}
       {background && (
         <Route path='/feed/:id'>
+          <OrderDetails />
+        </Route>
+      )}
+      {background && (
+        <Route path='/profile/orders/:id'>
           <OrderDetails />
         </Route>
       )}

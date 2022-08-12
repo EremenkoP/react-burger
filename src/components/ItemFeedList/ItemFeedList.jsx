@@ -22,7 +22,8 @@ const ItemFeedList = ({order, isPersonal}) => {
 
   const total = useMemo(
     () => order.ingredients.reduce((accumulator, item) => {
-      const price = ingredients.find(i => i._id === item)?.price;
+      const ingredient =ingredients.find(i => i._id === item)
+      const price = (ingredient.type === 'bun') ? ingredient.price * 2 : ingredient.price;
       accumulator += (!price ? 0 : price)
       return accumulator
     }, 0),
@@ -35,6 +36,7 @@ const ItemFeedList = ({order, isPersonal}) => {
       data: order
     })
   }
+
   return (
     <article  className={'p-6 ' + style.box} onClick={handleClick}>
       <div className={style.number__box}>
