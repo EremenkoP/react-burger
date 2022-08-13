@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { Route, Switch, useLocation } from "react-router-dom"
+import { Route, Switch, useRouteMatch} from "react-router-dom"
 
 import FeedList from "../../components/FeedList/FeedList"
 import ProfileForm from "../../components/profileForm/ProfileForm"
@@ -9,20 +9,21 @@ import style from './Profile.module.css'
 
 const Profile = () => {
 
-  const location = useLocation()
+  const { url, path } = useRouteMatch()
+
   const orders = useSelector(state => state.wsReducerAuth.orders)
 
   return (
     <div className={style.content}>
-      <ProfileNav />
-        <Switch>
-          <Route to='/' exact={true}>
-            <ProfileForm />
-          </Route>
-          <Route to={`/profile/orders`}  exact={true}>
-            <FeedList orders={orders} isPersonal={true} className={style.feedList}/>
-          </Route>
-        </Switch>
+      <ProfileNav url={url}/>
+      <Switch>
+        <Route to={path} exact={true}>
+          <ProfileForm />
+        </Route>
+        <Route to={`${path}/orders`} exact={true}>
+          <FeedList orders={orders} isPersonal={true} className={style.feedList}/>
+        </Route>
+      </Switch>
     </div>
   )
 }

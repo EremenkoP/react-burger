@@ -6,20 +6,20 @@ import { logOut } from "../../services/actions/API";
 import { refreshToken } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
 
-import style from './ProfileNav.module.css'
+import style from './ProfileNav.module.css';
 
-const ProfileNav = () =>{
+const ProfileNav = ({url}) =>{
 
-  const location = useLocation()
+  const location = useLocation();
   const history = useHistory();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const isProfile = location.pathname === `/profile`
-  const isOrders = location.pathname.startsWith('/profile/orders')
+  const isProfile = location.pathname === `/profile`;
+  const isOrders = location.pathname.startsWith('/profile/orders');
 
   const signOut = useCallback(
     async () => {
-      await dispatch(logOut(getCookie(refreshToken)))
+      await dispatch(logOut(getCookie(refreshToken)));
       history.replace({ pathname: '/profile' });
     },
     [history, dispatch]
@@ -29,12 +29,12 @@ const ProfileNav = () =>{
     <div className={style.content}>
       <ul className={style.ul}>
         <li className={style.li}>
-          <NavLink to='/profile' className={style.nav__link}>
+          <NavLink to={`${url}`} className={style.nav__link}>
             <span className={`${style.link} text text_type_main-medium ${!isProfile && 'text_color_inactive'}`}>Профиль</span>
           </NavLink>
         </li>
         <li className={style.li}>
-          <NavLink to='/profile/orders' className={style.nav__link}>
+          <NavLink to={`${url}/orders`} className={style.nav__link}>
             <span className={`${style.link} text text_type_main-medium ${!isOrders && 'text_color_inactive'}`}>История заказов</span>
           </NavLink>
         </li>
