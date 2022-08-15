@@ -1,12 +1,23 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch} from "react-redux";
 
 import FeedList from "../../components/FeedList/FeedList";
 import OrderTable from "../../components/orderTable/OrderTable";
+import { WS_IS_CLOSE, WS_IS_OPEN } from "../../services/actions/WS";
 
 import style from "./Feed.module.css";
 
 const Feed = () => {
   const ordersData = useSelector((state) => state.wsReducerAll.data);
+  const dispatch = useDispatch()
+
+  useEffect(()=> {
+    dispatch({type: WS_IS_OPEN})
+
+    return()=> {
+      dispatch({type: WS_IS_CLOSE})
+    }
+  })
 
   return (
     <div>

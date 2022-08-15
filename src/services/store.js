@@ -2,8 +2,8 @@ import { rootReducer } from "./rootReducer";
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA} from './actions/WS'
-import { WS_AUTH_START, WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA } from "./actions/WSauth";
+import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA, WS_IS_OPEN, WS_IS_CLOSE} from './actions/WS'
+import { WS_AUTH_START, WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA, WS_AUTH_IS_OPEN} from "./actions/WSauth";
 import socetMiddleware from "./middleware/WsAll";
 import { accessToken, WSS } from "../utils/constants";
 import { GET_INGREDIENTS } from "./actions";
@@ -20,7 +20,9 @@ const wsAction = {
   onOpen: WS_OPENED,
   onClose: WS_CLOSED,
   onError: WS_CLOSED_WITH_ERROR,
-  onDate: WS_GET_DATA
+  onDate: WS_GET_DATA,
+  wsStart: WS_IS_OPEN,
+  wsClose: WS_IS_CLOSE
 }
 
 const wsAuthAction = {
@@ -28,7 +30,9 @@ const wsAuthAction = {
   onOpen: WS_AUTH_OPENED,
   onClose: WS_AUTH_CLOSED,
   onError: WS_AUTH_CLOSED_WITH_ERROR,
-  onDate: WS_AUTH_GET_DATA
+  onDate: WS_AUTH_GET_DATA,
+  wsStart: WS_AUTH_IS_OPEN,
+  wsClose: WS_AUTH_CLOSED
 }
 
 const enhancer = composeEnhancers(applyMiddleware(

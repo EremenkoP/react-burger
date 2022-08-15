@@ -5,19 +5,23 @@ const socetMiddleware = (wsUrl, wsAction) => {
     return next => action => {
       const { dispatch } = store;
       const {type , data} = action;
-      const {wsInit, onOpen, onClose, onError, onDate} = wsAction;
+      const {wsInit, onOpen, onClose, onError, onDate, wsStart, wsClose} = wsAction;
 
       if (type === wsInit) {
         socket = new WebSocket(wsUrl)
       }
 
       if (socket) {
-        socket.onopen = event => {
-          dispatch ({type: onOpen})
+        if (type === wsStart) {
+          socket.onopen = event => {
+            dispatch ({type: onOpen})
+          }
         }
 
-        socket.onclose = event => {
-          dispatch({type: onClose})
+        if (type === wsClose) {
+          socket.onclose = event => {
+            dispatch({type: onClose})
+          }
         }
 
         socket.onerror = event => {
