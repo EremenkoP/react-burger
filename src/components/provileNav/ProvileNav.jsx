@@ -29,12 +29,12 @@ const ProfileNav = ({url}) =>{
     <div className={style.content}>
       <ul className={style.ul}>
         <li className={style.li}>
-          <NavLink to={`${url}`} className={style.nav__link}>
+          <NavLink to={'/profile'} className={style.nav__link}>
             <span className={`${style.link} text text_type_main-medium ${!isProfile && 'text_color_inactive'}`}>Профиль</span>
           </NavLink>
         </li>
         <li className={style.li}>
-          <NavLink to={`${url}/orders`} className={style.nav__link}>
+          <NavLink to={'/profile/orders'} className={style.nav__link}>
             <span className={`${style.link} text text_type_main-medium ${!isOrders && 'text_color_inactive'}`}>История заказов</span>
           </NavLink>
         </li>

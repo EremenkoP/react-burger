@@ -16,11 +16,13 @@ import IngredientPage from './IngredientPage/IngredientPage';
 import Feed from './Feed/Feed';
 import OrderDetails from './OrderDetails/OrderDetails';
 import OrderPage from './OrderPage/OrderPage';
+import ProfileOrders from './Profile/ProfileOrders';
 
 import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
 import { WS_AUTH_START } from '../services/actions/WSauth';
+
 
 const App = () => {
 
@@ -68,6 +70,9 @@ const App = () => {
         </Route>
         <ProtectedRoute path='/profile' logistic={isAuth}  toRedirect='/login' exact={true}>
           <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute path='/profile/orders' logistic={isAuth}  toRedirect='/login' exact={true}>
+          <ProfileOrders />
         </ProtectedRoute>
         <ProtectedRoute path="/login" logistic={!isAuth} toRedirect='/profile' exact={true}>
           <Login/>

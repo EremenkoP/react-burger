@@ -22,7 +22,7 @@ const OrderTableDetail = () => {
   if(Object.keys(order).length === 0 && orders) {
     let orderId =  local.pathname.split('/feed/')[1];
     if (orderId === undefined) {
-      orderId = local.pathname.split('/profile/')[1]
+      orderId = local.pathname.split('/orders/')[1]
       orders = authOrders
     }
     orders.forEach(el => {
@@ -32,15 +32,15 @@ const OrderTableDetail = () => {
     });
   }
 
-if(Object.keys(order).length !== 0 && orders) {
-  order.ingredients.forEach(id => {
-    ingredients.forEach(ingredient => {
-      if (ingredient._id === id) {
-        ingredientsInOrder.push(ingredient)
-      }
+  if(Object.keys(order).length !== 0 && orders) {
+    order.ingredients.forEach(id => {
+      ingredients.forEach(ingredient => {
+        if (ingredient._id === id) {
+          ingredientsInOrder.push(ingredient)
+        }
+      })
     })
-  })
-}
+  }
 
   const count = (ingredient) => {
     if (ingredient.type === 'bun') {
