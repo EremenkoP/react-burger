@@ -1,0 +1,48 @@
+.box {
+  width: 100%;
+}
+
+.orders{
+  width: 100%;
+  display: grid;
+  grid-template-areas: "ready inWork" "numberReady numberInWork";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content minmax(min-content, 1fr);
+  gap: 20px 36px
+}
+
+.ready{
+  grid-area: ready;
+}
+
+.inWork{
+  grid-area: inWork;
+}
+
+.numberReady{
+  grid-area: numberReady;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  width: 100%;
+  grid-template-rows: repeat(10, min-content);
+  grid-template-columns: repeat(3, min-content);
+  grid-auto-flow: column;
+  gap: 8px;
+  color: #00CCCC;
+}
+
+.numberInWork{
+  grid-area: numberInWork;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  width: 100%;
+  grid-template-rows: repeat(10, min-content);
+  grid-template-columns: repeat(3, min-content);
+  grid-auto-flow: column;
+  gap: 8px;
+}
+

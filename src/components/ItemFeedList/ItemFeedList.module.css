@@ -1,0 +1,70 @@
+.box {
+  background: #1C1C21;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+}
+
+.number__box{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.name{
+  text-align: left;
+}
+
+.order__box{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.done{
+  color: #00CCCC;
+}
+
+.cansel {
+  color: red;
+}
+
+.images {
+  position: relative;
+  height: 64px;
+}
+
+.imageList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.imageContainer {
+  border-radius: 100%;
+  background: linear-gradient(to right, #801AB2, #4C4CFF);
+  padding: 2px;
+}
+
+.image {
+  width: 64px;
+  height: 64px;
+  display: block;
+  object-fit: cover;
+  background-color: var(--background-alt);
+  border-radius: 100px;
+}
+
+.fakeImage {
+  padding: 2px;
+  position: absolute;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(28, 28, 33, .6);
+}

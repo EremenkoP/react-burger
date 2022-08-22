@@ -3,6 +3,7 @@ import { GET_USER, DELETE_USER, IS_AUTH, IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD
 
 import { URL, refreshToken, accessToken } from "../../utils/constants";
 import { saveToken, setCookie, deleteCookie } from "../../utils/cookie";
+import { WS_AUTH_START } from "./WSauth";
 // проверка правильности ответа
 const getResponseData = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
@@ -24,11 +25,14 @@ const getIngredients = () => {
   }
 }
 // отправка заказа
-const pushOrder = (ingredientsForOrder, setIsOrderDetailsOpened) => {
+const pushOrder = (ingredientsForOrder,  token) => {
   return async function(dispatch) {
     await fetch(`${URL}orders`, {
       method: 'POST',
-      headers: { "Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        authorization: 'Bearer ' + token
+      },
       body: JSON.stringify({
         ingredients: ingredientsForOrder,
       })
@@ -39,7 +43,6 @@ const pushOrder = (ingredientsForOrder, setIsOrderDetailsOpened) => {
         type: ORDER,
         data: res.order.number
       })
-      setIsOrderDetailsOpened(true)
     })
     .then(
       dispatch ({
@@ -238,6 +241,9 @@ const getUser = (token) => {
           dispatch ({
             type: GET_USER,
             data: res.user
+          })
+          dispatch ({
+            type: WS_AUTH_START
           })
         }
       })

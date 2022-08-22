@@ -11,7 +11,7 @@ import Modal from "../../components/modal/Modal";
 import OrderDetails from "../../components/orderDetails/OrderDetails";
 
 import { pushOrder, getNewToken } from "../../services/actions/API";
-import { refreshToken } from "../../utils/constants";
+import { accessToken, refreshToken } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
 
 import style from './home.module.css'
@@ -38,11 +38,12 @@ const Home = () => {
       }
     }, [dispatch]);
 
-    const handleOrderClick = () => {
+    const handleOrderClick = async () => {
       if(isAuth){
         const ingredientsOrder = ingredientsForOrder.elseIngregients.map((ingredient) => ingredient._id)
         ingredientsOrder.unshift(ingredientsForOrder.bun._id)
-        dispatch(pushOrder(ingredientsOrder, setIsOrderDetailsOpened))
+        await dispatch(pushOrder(ingredientsOrder,  getCookie(accessToken)))
+        setIsOrderDetailsOpened(true)
       } else {
         history.push('/login')
       }

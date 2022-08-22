@@ -27,7 +27,7 @@ const Modal = ({ onCloseClick, children, modalTitle}) => {
   return ReactDOM.createPortal(
     <>
     <div className={style.box}>
-      <h2 className="mt-10 ml-10 text text_type_main-large">{modalTitle}</h2>
+      {modalTitle && <h2 className="mt-10 ml-10 text text_type_main-large">{modalTitle}</h2>}
       <button type="button" className={style.button}>
         <CloseIcon type="primary" onClick={onCloseClick} />
       </button>
