@@ -12,7 +12,7 @@ const OrderTableDetail = () => {
 
   const local = useLocation()
 
-  let orders = useSelector(state => state.wsReducerAll.data.orders);
+  let orders = useSelector(state => state.wsReducerAll.orders.orders);
   const ingredients = useSelector(store => store.ingridientReducer.ingredients);
   let order = useSelector(store=> store.orderReducer.order)
   const authOrders = useSelector(state => state.wsReducerAuth.orders)

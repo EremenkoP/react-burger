@@ -6,7 +6,7 @@ import { formatOrderDate } from '../../utils/date';
 import {statusDone, statusMap} from "../../utils/constants";
 
 import style from './ItemFeedList.module.css'
-import { GET_ORDER_DETAILS } from '../../services/actions/orderDetail';
+import { GET_ORDER_DETAILS } from '../../services/actions/orderDetail.ts';
 
 
 const ItemFeedList = ({order, isPersonal}) => {

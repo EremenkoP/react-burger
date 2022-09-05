@@ -1,6 +1,9 @@
-const socetMiddleware = (wsUrl, wsAction) => {
-  return store => {
-    let socket = null;
+import { MiddlewareAPI, Middleware } from "redux";
+import { AppDispatch, RootState } from "../types/store";
+
+const socetMiddleware = <T>(wsUrl: string, wsAction: T | any): Middleware => {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+    let socket: WebSocket | null = null;
 
     return next => action => {
       const { dispatch } = store;

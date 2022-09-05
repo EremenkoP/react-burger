@@ -1,14 +1,10 @@
-import React from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import PropTypes from "prop-types";
 import {ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { v4 as uuid } from 'uuid'
 import { useDrop } from "react-dnd";
 
-import { ingredientPropTypes } from "../../utils/constants";
-
 import { ConstructorItem } from '../constructorItem/constructorItem';
-import {GET_INGREDIENT_FOR_BURGER, GET_BUN_FOR_BURGER, GET_FIRTH_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
+import {GET_INGREDIENT_FOR_BURGER, GET_BUN_FOR_BURGER} from '../../services/actions/index'
 
 import style from "./burgerConstructor.module.css"
 
@@ -40,18 +36,11 @@ const BurgerConstructor = ({ handleOrder }) => {
 
   const addElseIngredients = (data) => {
     const ingr = {...data.ingredient, 'uuid' : uuid()}
-    if (elseIngredients) {
     elseIngredients.push(ingr);
     dispatch({
       type: GET_INGREDIENT_FOR_BURGER,
       data: elseIngredients
     })
-    } else {
-      dispatch({
-        type: GET_FIRTH_INGREDIENT_FOR_BURGER,
-        data: [ingr]
-      })
-    }
   }
 
   const [ {isHover }, dropTarget] = useDrop ({
@@ -89,7 +78,7 @@ const BurgerConstructor = ({ handleOrder }) => {
           </div>
         )
       }
-      {elseIngredients ?
+      {elseIngredients.length !== 0 ?
         (<div className={" pr-2 "+style.container}>
           <ul className={style.ul}>
             {elseIngredients
@@ -126,16 +115,6 @@ const BurgerConstructor = ({ handleOrder }) => {
         {bun && elseIngredients && (<Order elseIngredients={elseIngredients}  bun={bun} handleOrder={handleOrder}/>)}
     </section>
   )
-}
-
-BurgerConstructor.propTypes = {
-  handleOrder: PropTypes.func.isRequired,
-};
-
-Order.PropType = {
-  bun: ingredientPropTypes.isRequired,
-  elseIngredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-  handleOrders: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

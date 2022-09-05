@@ -1,11 +1,11 @@
-function getCookie(name) {
+function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function setCookie(name, value, props) {
+function setCookie(name: string, value: string | number | boolean, props?: { [x: string]: any; expires?: any } | undefined) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -28,7 +28,7 @@ function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-function saveToken(nameToken, data ) {
+function saveToken(nameToken: string, data:string ) {
   let authToken;
   if (data.indexOf('Bearer') === 0) {
       authToken = data.split('Bearer ')[1];
@@ -38,7 +38,7 @@ function saveToken(nameToken, data ) {
   }
 }
 
- const deleteCookie = (name) => {
+ const deleteCookie = (name: string) => {
   setCookie(name, '', { expires: -1 });
 }
 

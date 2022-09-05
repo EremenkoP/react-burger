@@ -8,7 +8,7 @@ import { WS_IS_CLOSE, WS_IS_OPEN } from "../../services/actions/WS";
 import style from "./Feed.module.css";
 
 const Feed = () => {
-  const ordersData = useSelector((state) => state.wsReducerAll.data);
+  const ordersData = useSelector((state) => state.wsReducerAll.orders);
   const dispatch = useDispatch()
 
   useEffect(()=> {

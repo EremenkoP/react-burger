@@ -2,7 +2,6 @@ import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { useDrop,useDrag } from "react-dnd";
-import PropTypes from "prop-types";
 
 import { ingredientPropTypes } from "../../utils/constants";
 import {GET_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
@@ -19,7 +18,7 @@ const ConstructorItem = ({ingredient, index}) => {
   const deleteItem = (data) => {
     let newElseIngredient =  elseIngredients.filter(i => i.uuid !== data.uuid);
     if (newElseIngredient.length === 0) {
-      newElseIngredient = false
+      newElseIngredient = []
     }
     dispatch({
       type: GET_INGREDIENT_FOR_BURGER,
@@ -70,10 +69,5 @@ const ConstructorItem = ({ingredient, index}) => {
     </li>
   )
 }
-
-ConstructorItem.propTypes = {
-  ingredient: ingredientPropTypes.isRequired,
-  index: PropTypes.number.isRequired,
-};
 
 export {ConstructorItem}

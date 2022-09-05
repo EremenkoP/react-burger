@@ -8,11 +8,17 @@ import socetMiddleware from "./middleware/WsAll";
 import { accessToken, WSS } from "../utils/constants";
 import { GET_INGREDIENTS } from "./actions";
 import { getCookie } from "../utils/cookie";
+import { TWsAction, TWsAuthAction } from "./types/ws";
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : compose;
 
 const wsAction = {
@@ -37,10 +43,10 @@ const wsAuthAction = {
 
 const enhancer = composeEnhancers(applyMiddleware(
   thunk,
-  socetMiddleware(`${WSS}/all`, wsAction),
-  socetMiddleware(`${WSS}?token=${getCookie(accessToken)}`, wsAuthAction)
+  socetMiddleware<TWsAction>(`${WSS}/all`, wsAction),
+  socetMiddleware<TWsAuthAction>(`${WSS}?token=${getCookie(accessToken)}`, wsAuthAction)
   ));
 
 const store = createStore(rootReducer, enhancer);
 
-export {store}
+export default store

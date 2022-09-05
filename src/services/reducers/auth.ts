@@ -1,12 +1,13 @@
 import {GET_USER, DELETE_USER, IS_AUTH ,IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD_IS_RESET} from '../actions/auth'
+import { TAuthState, TInitAuthState, TUnionAuthAction } from '../types/toDo/toDoAuth'
 
-const authState = {
+const authState: TInitAuthState = {
   user: {},
   isAuth: false,
   resetPassword: false
 }
 
-const authReducer = (state = authState, action) => {
+const authReducer = (state = authState, action:TUnionAuthAction): TAuthState => {
   switch(action.type) {
     case GET_USER: {
       return {

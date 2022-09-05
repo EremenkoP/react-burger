@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import Modal from "../../components/modal/Modal";
 import OrderTableDetail from "../../components/orderTableDetail/OrderTableDetail";
-import { REMOVE_ORDER_DETAILS } from "../../services/actions/orderDetail";
+import { REMOVE_ORDER_DETAILS } from "../../services/actions/orderDetail.ts";
 
 const OrderDetails = () => {
 

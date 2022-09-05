@@ -1,16 +1,17 @@
 import { CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { FC } from "react";
 import { useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-import { ingredientPropTypes } from "../../utils/constants";
 import { INGREDIENT_DETAILS} from '../../services/actions/index'
+import { TIngredientItem } from '../../services/types/ingredient'
 
 import style from './burgerIngredientItem.module.css'
 
 
-const BurgerIngredientItem = ({ingredient, count}) => {
+
+const BurgerIngredientItem: FC<TIngredientItem> = ({ingredient, count}) => {
 
   const dispatch = useDispatch();
   const location = useLocation()
@@ -44,15 +45,11 @@ const BurgerIngredientItem = ({ingredient, count}) => {
           <CurrencyIcon type="primary" />
         </p>
         <h3 className={'text text_type_main-small ' + style.name} >{ingredient.name}</h3>
-        {count > 0 && (<Counter count={count} size="default" />)}
+        {count && count > 0 && (<Counter count={count} size="default" />)}
       </Link>
     </article>
   )
 }
 
-BurgerIngredientItem.PropType = {
-  ingredient: ingredientPropTypes.isRequired,
-  count: PropTypes.number.isRequired,
-}
 
 export {BurgerIngredientItem}

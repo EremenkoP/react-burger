@@ -52,5 +52,9 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://eremenkop.github.io/react-burger/"
+  "homepage": "https://eremenkop.github.io/react-burger/",
+
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3"
+  }
 }

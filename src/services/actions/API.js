@@ -1,9 +1,9 @@
 import { GET_INGREDIENTS, ORDER, REMOVE_INGREDIENT_FOR_BURGER } from "./index";
 import { GET_USER, DELETE_USER, IS_AUTH, IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD_IS_RESET} from "./auth";
-
 import { URL, refreshToken, accessToken } from "../../utils/constants";
 import { saveToken, setCookie, deleteCookie } from "../../utils/cookie";
 import { WS_AUTH_START } from "./WSauth";
+
 // проверка правильности ответа
 const getResponseData = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);

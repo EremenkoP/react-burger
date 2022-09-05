@@ -1,9 +1,13 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import PropTypes from "prop-types";
+import { FC } from 'react';
 
-import {BurgerIngredientItem} from '../burgerIngredientItem/burgerIngredientItem'
+import {BurgerIngredientItem} from '../burgerIngredientItem/burgerIngredientItem';
+import { TFilterString, TIngredient } from '../../services/types/ingredient';
+import  {useAppSelector, useAppDispatch} from '../../hooks/store'
 
 import style from './burgerIngredientGroup.module.css'
+
 
 const BurgerIngredientGroup = ({ filterType }) => {
 

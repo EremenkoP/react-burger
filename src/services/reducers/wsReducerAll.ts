@@ -1,12 +1,13 @@
 import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA} from '../actions/WS';
+import { TInitialWsState, TUnioniWsAll, TWsState } from '../types/toDo/toDoWsReducer';
 
-const initalState = {
+const initalState: TInitialWsState = {
   wsContected: false,
-  connectionError:'',
-  data: {}
+  connectionError: '',
+  orders: {}
 }
 
-const wsReducerAll = (state = initalState, action) => {
+const wsReducerAll = (state = initalState, action: TUnioniWsAll): TWsState => {
   switch (action.type) {
     case WS_CLOSED: {
       return {
@@ -31,7 +32,7 @@ const wsReducerAll = (state = initalState, action) => {
     case WS_GET_DATA: {
       return {
         ...state,
-        data: action.data
+        orders: action.data
       }
     }
     default: {
