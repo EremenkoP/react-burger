@@ -3,7 +3,7 @@ import { TInitialWsState, TUnioniWsAuth, TWsState } from '../types/toDo/toDoWsRe
 
 const wsState: TInitialWsState = {
   wsContected: false,
-  connectionError:'',
+  connectionError:{},
   orders: {}
 }
 
@@ -19,7 +19,7 @@ const wsReducerAuth = (state = wsState, action: TUnioniWsAuth):TWsState => {
       return {
         ...state,
         wsContected: true,
-        connectionError: ''
+        connectionError: {}
       }
     }
     case WS_AUTH_CLOSED_WITH_ERROR: {

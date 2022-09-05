@@ -1,7 +1,8 @@
 import { MiddlewareAPI, Middleware } from "redux";
 import { AppDispatch, RootState } from "../types/store";
+import { TUnionWsAction } from "../types/ws";
 
-const socetMiddleware = <T>(wsUrl: string, wsAction: T | any): Middleware => {
+const socetMiddleware = (wsUrl: string, wsAction: TUnionWsAction): Middleware => {
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 

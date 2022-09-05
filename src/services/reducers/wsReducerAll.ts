@@ -3,7 +3,7 @@ import { TInitialWsState, TUnioniWsAll, TWsState } from '../types/toDo/toDoWsRed
 
 const initalState: TInitialWsState = {
   wsContected: false,
-  connectionError: '',
+  connectionError: {},
   orders: {}
 }
 
@@ -19,7 +19,7 @@ const wsReducerAll = (state = initalState, action: TUnioniWsAll): TWsState => {
       return {
         ...state,
         wsContected: true,
-        connectionError: ''
+        connectionError: {}
       }
     }
     case WS_CLOSED_WITH_ERROR: {

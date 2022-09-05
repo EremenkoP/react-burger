@@ -8,7 +8,6 @@ import socetMiddleware from "./middleware/WsAll";
 import { accessToken, WSS } from "../utils/constants";
 import { GET_INGREDIENTS } from "./actions";
 import { getCookie } from "../utils/cookie";
-import { TWsAction, TWsAuthAction } from "./types/ws";
 
 declare global {
   interface Window {
@@ -43,8 +42,8 @@ const wsAuthAction = {
 
 const enhancer = composeEnhancers(applyMiddleware(
   thunk,
-  socetMiddleware<TWsAction>(`${WSS}/all`, wsAction),
-  socetMiddleware<TWsAuthAction>(`${WSS}?token=${getCookie(accessToken)}`, wsAuthAction)
+  socetMiddleware(`${WSS}/all`, wsAction),
+  socetMiddleware(`${WSS}?token=${getCookie(accessToken)}`, wsAuthAction)
   ));
 
 const store = createStore(rootReducer, enhancer);

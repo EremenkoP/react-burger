@@ -4,13 +4,13 @@ import {WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_D
 
 type TInitialWsState = {
   wsContected: false,
-  connectionError: '',
+  connectionError: {},
   orders: {}
 }
 
 type TWsState = {
   wsContected: boolean,
-  connectionError: string,
+  connectionError: {} | string,
   orders: {} | Array<TOrderDetail>
 }
 
@@ -24,7 +24,7 @@ interface IWsOpened {
 
 interface IWsClosedWithError {
   readonly type: typeof WS_CLOSED_WITH_ERROR;
-  readonly data: string
+  readonly data: {}
 }
 
 interface IWsGetData {
@@ -44,7 +44,7 @@ interface IWsAuthOpened {
 
 interface IWsAuthClosedWithError {
   readonly type: typeof WS_AUTH_CLOSED_WITH_ERROR;
-  readonly data: string
+  readonly data: {}
 }
 
 type TAuthOrders = {
