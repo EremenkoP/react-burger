@@ -3,20 +3,21 @@ import { GET_USER, DELETE_USER, IS_AUTH, IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD
 import { URL, refreshToken, accessToken } from "../../utils/constants";
 import { saveToken, setCookie, deleteCookie } from "../../utils/cookie";
 import { WS_AUTH_START } from "./WSauth";
+import { TDefaultRes, TGetUser, TIngredientsRes, TOrderRes, TRefreshTokenRes, TUserRes } from "../types/API";
 
 // проверка правильности ответа
-const getResponseData = (res) => {
+const getResponseData = <T>(res: Response): Promise<T> => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
 // запрос ингредиентов
 const getIngredients = () => {
-  return async function(dispatch) {
+  return async function(dispatch: Function) {
     await fetch(`${URL}ingredients`, {
       headers: {
         "Content-Type": "application/json"
       }
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TIngredientsRes>(res))
       .then((res) => dispatch({
         type: GET_INGREDIENTS,
         data: res.data
@@ -25,8 +26,8 @@ const getIngredients = () => {
   }
 }
 // отправка заказа
-const pushOrder = (ingredientsForOrder,  token) => {
-  return async function(dispatch) {
+const pushOrder = (ingredientsForOrder: Array<string>,  token: string) => {
+  return async function(dispatch: Function) {
     await fetch(`${URL}orders`, {
       method: 'POST',
       headers: {
@@ -37,7 +38,7 @@ const pushOrder = (ingredientsForOrder,  token) => {
         ingredients: ingredientsForOrder,
       })
     })
-    .then((res) => getResponseData(res))
+    .then((res) => getResponseData<TOrderRes>(res))
     .then((res) => {
       dispatch ({
         type: ORDER,
@@ -53,8 +54,8 @@ const pushOrder = (ingredientsForOrder,  token) => {
   }
 }
 // запрос востановления пароля
-const postEmailForPassword = (email) => {
-  return async function(dispatch) {
+const postEmailForPassword = (email: string) => {
+  return async function(dispatch: Function) {
      await fetch(`${URL}password-reset`, {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -62,7 +63,7 @@ const postEmailForPassword = (email) => {
         email: email
       })
     })
-    .then(res => getResponseData(res))
+    .then(res => getResponseData<TDefaultRes>(res))
     .then(res => {
       if(res.success) {
         dispatch({
@@ -74,8 +75,8 @@ const postEmailForPassword = (email) => {
   }
 }
 // изменение пароля
-const resetPassword = (password, token) => {
-  return async function(dispatch) {
+const resetPassword = (password: string, token: string) => {
+  return async function(dispatch: Function) {
     await fetch(`${URL}password-reset/reset`, {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -84,7 +85,7 @@ const resetPassword = (password, token) => {
         token: token
       })
     })
-    .then(res => getResponseData(res))
+    .then(res => getResponseData<TDefaultRes>(res))
     .then(res => {
       if(res.success) {
         dispatch({
@@ -97,8 +98,8 @@ const resetPassword = (password, token) => {
 }
 
 // регистрация пользователя
-const registrationAuth = (email, password, name) => {
-  return async function(dispatch) {
+const registrationAuth = (email: string, password: string, name: string) => {
+  return async function(dispatch: Function) {
     await fetch (`${URL}auth/register`, {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -108,7 +109,7 @@ const registrationAuth = (email, password, name) => {
         "name": name
       })
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TUserRes>(res))
       .then((res) => {
         if(res.success) {
           dispatch ({
@@ -131,8 +132,8 @@ const registrationAuth = (email, password, name) => {
   }
 }
 // авторизация
-const autorizationUser = (login, password) => {
-  return async function (dispatch) {
+const autorizationUser = (login: string, password: string) => {
+  return async function (dispatch: Function) {
     await fetch (`${URL}auth/login`, {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -141,7 +142,7 @@ const autorizationUser = (login, password) => {
         "password": password,
       })
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TUserRes>(res))
       .then((res) => {
         if(res.success) {
           dispatch ({
@@ -167,8 +168,8 @@ const autorizationUser = (login, password) => {
   }
 }
 // обновление токена
-const getNewToken = (token) => {
-  return async function(dispatch) {
+const getNewToken = (token: string) => {
+  return async function(dispatch: Function) {
     await fetch (`${URL}auth/token`, {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -176,7 +177,7 @@ const getNewToken = (token) => {
         token: token
       })
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TRefreshTokenRes>(res))
       .then((res) => {
         if(res.success) {
           setCookie(refreshToken, res.refreshToken)
@@ -198,8 +199,8 @@ const getNewToken = (token) => {
   }
 }
 // выход пользователя из системы
-const logOut =  (tok) => {
-  return async function (dispatch) {
+const logOut =  (tok: string) => {
+  return async function (dispatch: Function) {
     await fetch (`${URL}auth/logout`, {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -207,7 +208,7 @@ const logOut =  (tok) => {
         token: `${tok}`,
       })
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TDefaultRes>(res))
       .then((res) => {
         if(res.success) {
           dispatch ({
@@ -226,8 +227,8 @@ const logOut =  (tok) => {
   }
 }
 // получение данных пользователя
-const getUser = (token) => {
-  return async function (dispatch) {
+const getUser = (token: string) => {
+  return async function (dispatch: Function) {
     await fetch (`${URL}auth/user`, {
       method: 'GET',
       headers: {
@@ -235,7 +236,7 @@ const getUser = (token) => {
         authorization: 'Bearer ' + token
       }
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TGetUser>(res))
       .then((res) => {
         if(res.success) {
           dispatch ({
@@ -259,8 +260,8 @@ const getUser = (token) => {
   }
 }
 // изменения данных пользователя
-const renameUser = (token, email, name) => {
-  return async function (dispatch) {
+const renameUser = (token: string, email: string, name: string) => {
+  return async function (dispatch: Function) {
     await fetch (`${URL}auth/user`, {
       method: 'PATCH',
       headers: {
@@ -272,7 +273,7 @@ const renameUser = (token, email, name) => {
         "name": name
       })
     })
-      .then((res) => getResponseData(res))
+      .then((res) => getResponseData<TGetUser>(res))
       .then((res) => {
         if(res.success) {
           dispatch ({

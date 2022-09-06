@@ -53,4 +53,11 @@ type TRefreshTokenRes = {
   refreshToken: string;
 };
 
-export {TOrderRes, TDefaultRes, TUser, TUserRes, TGetUser, TRefreshTokenRes}
+type TIngredientUniqueId = TIngredient & { id: string };
+
+type TIngredientsRes= {
+  data: TIngredientUniqueId[];
+  success: boolean;
+}
+
+export {TOrderRes, TDefaultRes, TUser, TUserRes, TGetUser, TRefreshTokenRes, TIngredientsRes}
