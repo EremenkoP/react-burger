@@ -1,8 +1,9 @@
+import { noneUser } from '../../utils/constants'
 import {GET_USER, DELETE_USER, IS_AUTH ,IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD_IS_RESET} from '../actions/auth'
-import { TAuthState, TInitAuthState, TUnionAuthAction } from '../types/toDo/toDoAuth'
+import { TAuthState, TUnionAuthAction } from '../types/toDo/toDoAuth'
 
-const authState: TInitAuthState = {
-  user: {},
+const authState: TAuthState = {
+  user: noneUser,
   isAuth: false,
   resetPassword: false
 }
@@ -18,7 +19,7 @@ const authReducer = (state = authState, action:TUnionAuthAction): TAuthState => 
     case DELETE_USER: {
       return {
         ...state,
-        user: {}
+        user: noneUser
       }
     }
     case IS_AUTH: {

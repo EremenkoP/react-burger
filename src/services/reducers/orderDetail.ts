@@ -1,8 +1,9 @@
+import { noneOrder } from "../../utils/constants"
 import { GET_ORDER_DETAILS, REMOVE_ORDER_DETAILS } from "../actions/orderDetail"
-import { TInitialStateOrder, TStateOrder, TUnionOrderDetail } from "../types/toDo/todoOrder"
+import { TStateOrder, TUnionOrderDetail } from "../types/toDo/todoOrder"
 
-const orderState: TInitialStateOrder = {
-  order: {}
+const orderState: TStateOrder = {
+  order: noneOrder
 }
 
 const orderReducer = (state = orderState, action: TUnionOrderDetail): TStateOrder => {
@@ -16,7 +17,7 @@ const orderReducer = (state = orderState, action: TUnionOrderDetail): TStateOrde
     case REMOVE_ORDER_DETAILS: {
       return {
         ...state,
-        order: {}
+        order: noneOrder
       }
     }
     default: {

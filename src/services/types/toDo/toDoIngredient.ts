@@ -2,23 +2,13 @@ import {GET_INGREDIENTS, GET_INGREDIENT_FOR_BURGER, INGREDIENT_DETAILS, DETAILS_
   REMOVE_INGREDIENT_FOR_BURGER} from '../../actions/index'
 import { TIngredient } from '../ingredient'
 
-type TInitialState = {
-  ingredients: [],
-  ingredientsForBurger: {
-    bun: false,
-    elseIngregients: []
-  },
-  ingredientDetail: {},
-  order: {}
-}
-
 type TState = {
   ingredients: [] | Array<TIngredient>,
   ingredientsForBurger: {
-    bun: boolean | TIngredient,
+    bun: false | TIngredient,
     elseIngregients: [] | Array<TIngredient>
   },
-  ingredientDetail: {} | TIngredient,
+  ingredientDetail: TIngredient,
   order: {} | number
 }
 
@@ -60,4 +50,4 @@ interface IOrder {
 
 type TUnionIngredientAction = IGetIngredient | IGetIngredientForBurger | IGetBunForBurger | IRemoveIngredientForBurger| IIngredientDetails | IRemoveDetails | IOrder;
 
-export {TInitialState, TState, TUnionIngredientAction}
+export { TState, TUnionIngredientAction}

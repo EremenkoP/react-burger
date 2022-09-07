@@ -1,10 +1,11 @@
+import { noneOrders } from '../../utils/constants';
 import {WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA} from '../actions/WSauth';
-import { TInitialWsState, TUnioniWsAuth, TWsState } from '../types/toDo/toDoWsReducer';
+import { TUnioniWsAuth, TWsState } from '../types/toDo/toDoWsReducer';
 
-const wsState: TInitialWsState = {
+const wsState: TWsState = {
   wsContected: false,
   connectionError:{},
-  orders: {}
+  orders: noneOrders
 }
 
 const wsReducerAuth = (state = wsState, action: TUnioniWsAuth):TWsState => {
@@ -32,7 +33,7 @@ const wsReducerAuth = (state = wsState, action: TUnioniWsAuth):TWsState => {
     case WS_AUTH_GET_DATA: {
       return {
         ...state,
-        orders: action.data.orders
+        orders: action.data
       }
     }
     default: {

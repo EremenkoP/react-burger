@@ -1,46 +1,50 @@
-import React, {useRef, useEffect} from "react";
-import { useSelector } from 'react-redux'
+import React, {useRef, useEffect, MutableRefObject} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { BurgerIngredientGroup } from "../burgerIngredientGroup/burgerIngredientGroup";
 
+import {useInView} from '../../hooks/useInView'
+import { useAppSelector } from "../../hooks/store";
+import {BUN, SAUCE, MAIN, INGREDIENT_GROUPS} from '../../utils/constants'
+
 import style from './BurgerIngredients.module.css'
 
-import {useInView} from '../../hooks/useInView'
-import {BUN, SAUCE, MAIN, INGREDIENT_GROUPS} from '../../utils/constants'
 
 const BurgerIngredients = () => {
 
-  const ingredients = useSelector(store => store.ingridientReducer.ingredients)
+  const ingredients = useAppSelector(store => store.ingridientReducer.ingredients)
 
-  const [current, setCurrent] = React.useState('bun')
+  const [current, setCurrent] = React.useState<{key: string, value: string}>(BUN)
 
-  const bunRef = useRef();
-  const sauceRef = useRef();
-  const mainRef = useRef();
+  const bunRef: MutableRefObject<HTMLHeadingElement | null> = useRef<HTMLHeadingElement>(null);
+  const sauceRef: MutableRefObject<HTMLHeadingElement | null> = useRef<HTMLHeadingElement>(null);
+  const mainRef: MutableRefObject<HTMLHeadingElement | null> = useRef<HTMLHeadingElement>(null);
 
-  const bunInView = useInView(bunRef)
-  const sauceInView = useInView(sauceRef)
-  const mainInView = useInView(mainRef)
+  const bunInView = useInView(bunRef as MutableRefObject<HTMLHeadingElement>)
+  const sauceInView = useInView(sauceRef as MutableRefObject<HTMLHeadingElement>)
+  const mainInView = useInView(mainRef as MutableRefObject<HTMLHeadingElement>)
 
-  const refs = {
+  const refs: {[x: string]: MutableRefObject<HTMLHeadingElement | null>} = {
     [BUN.key]: bunRef,
     [SAUCE.key]: sauceRef,
     [MAIN.key]: mainRef,
   }
 
-  const setCurrentTab = (key) => {
+  const setCurrentTab = (key: string) => {
     setCurrent(INGREDIENT_GROUPS.filter(g => g.key === key)[0]);
-    refs[key].current.scrollIntoView({ block: "start", behavior: 'smooth' });
+    const currentRef = refs[key]
+    if (currentRef.current) {
+      currentRef.current.scrollIntoView({ block: "start", behavior: 'smooth' });
+    }
   }
 
   useEffect(() => {
     if (bunInView) {
-      setCurrent('bun')
+      setCurrent(BUN)
     } else if (sauceInView) {
-      setCurrent('sauce')
+      setCurrent(SAUCE)
     } else {
-      setCurrent('main')
+      setCurrent(MAIN)
     }
   }, [bunInView, sauceInView, mainInView])
 
@@ -49,7 +53,7 @@ const BurgerIngredients = () => {
       <h1 className={'text text_type_main-large mt-10 mb-5'}>Соберите бургер</h1>
 
       <ul className={style.ul}>
-        {INGREDIENT_GROUPS.map(g => (<li key={g.key}><Tab value={g.key} active={current === g.key} onClick={setCurrentTab}>{g.value}</Tab></li>))}
+        {INGREDIENT_GROUPS.map(g => (<li key={g.key}><Tab value={g.key} active={current.key === g.key} onClick={setCurrentTab}>{g.value}</Tab></li>))}
       </ul>
 
       { ingredients !== undefined ? (

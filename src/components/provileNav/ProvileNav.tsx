@@ -1,18 +1,18 @@
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 import { NavLink, useLocation, useHistory} from "react-router-dom"
-import { useDispatch } from 'react-redux';
 
 import { logOut } from "../../services/actions/API";
 import { refreshToken } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
 
 import style from './ProfileNav.module.css';
+import { useAppDispatch } from "../../hooks/store";
 
-const ProfileNav = ({url}) =>{
+const ProfileNav: FC<{url: string}> = ({url}) =>{
 
   const location = useLocation();
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const isProfile = location.pathname === `/profile`;
   const isOrders = location.pathname.startsWith('/profile/orders');

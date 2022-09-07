@@ -1,19 +1,18 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 
 import ModalOverlay from "../modalOverlay/ModalOverlay";
 
 import style from './Modal.module.css';
 
-const modalsContainer = document.querySelector("#modals");
+const modalsContainer = document.querySelector("#modals") as HTMLElement;
 
-const Modal = ({ onCloseClick, children, modalTitle}) => {
+const Modal: FC<{onCloseClick: VoidFunction; modalTitle: undefined | string}> = ({ onCloseClick, children, modalTitle}) => {
 
   React.useEffect(() => {
 
-    const handleEscKeydown = (event) => {
+    const handleEscKeydown = (event: KeyboardEvent) => {
       event.key === "Escape" && onCloseClick();
     };
 
@@ -37,12 +36,6 @@ const Modal = ({ onCloseClick, children, modalTitle}) => {
     </>,
     modalsContainer
   );
-};
-
-Modal.propTypes = {
-  onCloseClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  modaleTitle: PropTypes.string
 };
 
 export default Modal;

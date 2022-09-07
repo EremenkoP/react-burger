@@ -1,12 +1,8 @@
 import style from './ModalOverlay.module.css';
-import PropTypes from "prop-types";
+import { FC, MouseEventHandler } from 'react';
 
-const ModalOverlay = ({ onClick }) => {
+const ModalOverlay: FC<{onClick: MouseEventHandler<HTMLDivElement>}> = ({ onClick }) => {
   return <div onClick={onClick} className={style.overlay}></div>;
 };
-
-ModalOverlay.propType = {
-  onClick: PropTypes.func.isRequired
-}
 
 export default ModalOverlay;

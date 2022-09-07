@@ -1,16 +1,16 @@
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/store';
 
 import style from './IngredientDetails.module.css';
 
 const IngredientDetails = () => {
 
-  let ingredient = useSelector(store => store.ingridientReducer.ingredientDetail);
-  const ingredients = useSelector(store => store.ingridientReducer.ingredients);
+  let ingredient = useAppSelector(store => store.ingridientReducer.ingredientDetail);
+  const ingredients = useAppSelector(store => store.ingridientReducer.ingredients);
 
   const local = useLocation();
 
-  if(Object.keys(ingredient).length === 0) {
+  if(ingredient.type === 'none') {
     const id =  local.pathname.split('/ingredients/')[1]
     ingredients.forEach(el => {
       if (el._id === id) {

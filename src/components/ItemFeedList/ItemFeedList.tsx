@@ -1,29 +1,34 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 
 import { formatOrderDate } from '../../utils/date';
 import {statusDone, statusMap} from "../../utils/constants";
 
 import style from './ItemFeedList.module.css'
-import { GET_ORDER_DETAILS } from '../../services/actions/orderDetail.ts';
+import { GET_ORDER_DETAILS } from '../../services/actions/orderDetail';
+import { TOrder } from '../../services/types/ordersDetail';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
+type TItemFeedList = {
+  order: TOrder;
+  isPersonal: Boolean;
+}
 
-const ItemFeedList = ({order, isPersonal}) => {
+const ItemFeedList: FC<TItemFeedList> = ({order, isPersonal}) => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const ingredients = useSelector(store => store.ingridientReducer.ingredients)
+  const ingredients = useAppSelector(store => store.ingridientReducer.ingredients)
   const len = order.ingredients ? order.ingredients.length : 0
 
   const images = useMemo(
     () => order.ingredients.slice(0, 6).map(item => ingredients.find(i => i._id === item)?.image_mobile)
-  , [order.ingredients, ingredients])
+  ,[order.ingredients, ingredients])
 
   const total = useMemo(
     () => order.ingredients.reduce((accumulator, item) => {
       const ingredient =ingredients.find(i => i._id === item)
-      const price = (ingredient.type === 'bun') ? ingredient.price * 2 : ingredient.price;
+      const price = ingredient && ((ingredient.type === 'bun') ? ingredient.price * 2 : ingredient.price);
       accumulator += (!price ? 0 : price)
       return accumulator
     }, 0),

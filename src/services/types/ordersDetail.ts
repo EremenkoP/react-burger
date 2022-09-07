@@ -1,13 +1,11 @@
-import { TIngredient } from "./ingredient"
-
-type TOrderDetail ={
+type TOrder ={
   _id:string;
-  ingredients: Array<TIngredient>;
-  status: "done" | "created" | "pending" | "cancel";
+  ingredients: Array<string>;
+  status: "done" | "created" | "pending" | "cancel" | 'none';
   name: string;
   createdAt: string;
   updatedAt: string;
   number: number
 }
 
-export {TOrderDetail}
+export { TOrder}

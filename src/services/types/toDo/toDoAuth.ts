@@ -2,15 +2,9 @@ import {GET_USER, DELETE_USER, IS_AUTH ,IS_UNAUTH, TRY_RESET_PASSWORD, PASSWORD_
 import { TUser } from '../auth'
 
 type TAuthState = {
-  user: {} | TUser,
+  user: TUser,
   isAuth: boolean,
   resetPassword: boolean
-}
-
-type TInitAuthState = {
-  user: {},
-  isAuth: false,
-  resetPassword: false
 }
 
 interface IGetUser {
@@ -46,4 +40,4 @@ interface  IPasswordIsReset {
 type TUnionAuthAction = IGetUser | IDeleteUser | IIsAuth | IIsUnAuth| ITryResetPassword| IPasswordIsReset;
 
 
-export {TAuthState, TInitAuthState, TUnionAuthAction}
+export {TAuthState, TUnionAuthAction}

@@ -1,8 +1,9 @@
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { FC, FormEvent } from 'react'
 
 import style from "./form.module.css"
 
-const Form = ({title, nameButton, children, onClick}) => {
+const Form:FC<{title:string, nameButton: string, onClick: {(event: FormEvent<HTMLFormElement>):void}}> = ({title, nameButton, children, onClick}) => {
 
   return (
     <form className={'mt-6 mb-28 '+ style.form} onSubmit={onClick}>
@@ -14,3 +15,4 @@ const Form = ({title, nameButton, children, onClick}) => {
 }
 
 export default Form
+

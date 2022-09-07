@@ -1,6 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/store';
+import { TIngredient } from '../../services/types/ingredient';
 
 import { statusMap, statusDone, statusCancel } from '../../utils/constants';
 import { formatOrderDate } from '../../utils/date';
@@ -12,27 +13,27 @@ const OrderTableDetail = () => {
 
   const local = useLocation()
 
-  let orders = useSelector(state => state.wsReducerAll.orders.orders);
-  const ingredients = useSelector(store => store.ingridientReducer.ingredients);
-  let order = useSelector(store=> store.orderReducer.order)
-  const authOrders = useSelector(state => state.wsReducerAuth.orders)
+  let orders = useAppSelector(state => state.wsReducerAll.orders);
+  const ingredients = useAppSelector(store => store.ingridientReducer.ingredients);
+  let order = useAppSelector(store=> store.orderReducer.order)
+  const authOrders = useAppSelector(state => state.wsReducerAuth.orders)
 
-  let ingredientsInOrder = [];
+  let ingredientsInOrder: Array<TIngredient> = [];
 
-  if(Object.keys(order).length === 0 && orders) {
+  if(order.status === 'none' && orders) {
     let orderId =  local.pathname.split('/feed/')[1];
     if (orderId === undefined) {
       orderId = local.pathname.split('/orders/')[1]
       orders = authOrders
     }
-    orders.forEach(el => {
+    orders.orders.forEach(el => {
       if (el._id === orderId) {
         order = el
       }
     });
   }
 
-  if(Object.keys(order).length !== 0 && orders) {
+  if(order.status !== 'none'  && orders) {
     order.ingredients.forEach(id => {
       ingredients.forEach(ingredient => {
         if (ingredient._id === id) {
@@ -42,7 +43,7 @@ const OrderTableDetail = () => {
     })
   }
 
-  const count = (ingredient) => {
+  const count = (ingredient: TIngredient) => {
     if (ingredient.type === 'bun') {
       return 2
     } else {

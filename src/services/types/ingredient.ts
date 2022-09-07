@@ -1,7 +1,7 @@
 type TIngredient = {
   readonly _id: string;
   readonly name: string;
-  readonly type: 'bun' | 'sauce' | 'main';
+  readonly type: 'bun' | 'sauce' | 'main' | 'none';
   readonly proteins: number;
   readonly fat: number;
   readonly carbohydrates: number;
@@ -24,4 +24,4 @@ type TFilterString = {
   readonly filterType: string
 }
 
-export {TIngredient, TIngredientItem, TFilterString}
+export {TIngredient, TIngredientItem, TFilterString, TBurgerItem}

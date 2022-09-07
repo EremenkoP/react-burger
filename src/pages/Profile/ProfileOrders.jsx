@@ -9,7 +9,7 @@ import style from './Profile.module.css'
 
 const ProfileOrders = () => {
 
-  const orders = useSelector(state => state.wsReducerAuth.orders)
+  const orders = useSelector(state => state.wsReducerAuth.orders.orders)
   const dispatch = useDispatch()
 
   useEffect(()=> {

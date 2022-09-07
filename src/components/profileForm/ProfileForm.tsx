@@ -1,9 +1,7 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import InputContainer from '../inputContainer/InputContainer'
-
 import { getUser, renameUser } from '../../services/actions/API';
 import { accessToken } from '../../utils/constants';
 import { getCookie } from '../../utils/cookie';
@@ -13,9 +11,9 @@ import style from './ProfileForm.module.css'
 
 const ProfileForm = () => {
 
-  const dispatch= useDispatch()
+  const dispatch= useAppDispatch()
 
-  const user = useSelector(store=> store.authReducer.user);
+  const user =  useAppSelector(store=> store.authReducer.user);
 
   const [name, setName] = useState(user.name)
   const [disName, setDisName] = useState(true)

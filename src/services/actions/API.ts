@@ -199,7 +199,7 @@ const getNewToken = (token: string) => {
   }
 }
 // выход пользователя из системы
-const logOut =  (tok: string) => {
+const logOut =  (tok: string | undefined) => {
   return async function (dispatch: Function) {
     await fetch (`${URL}auth/logout`, {
       method: 'POST',
@@ -227,7 +227,7 @@ const logOut =  (tok: string) => {
   }
 }
 // получение данных пользователя
-const getUser = (token: string) => {
+const getUser = (token: string | undefined) => {
   return async function (dispatch: Function) {
     await fetch (`${URL}auth/user`, {
       method: 'GET',
@@ -260,7 +260,7 @@ const getUser = (token: string) => {
   }
 }
 // изменения данных пользователя
-const renameUser = (token: string, email: string, name: string) => {
+const renameUser = (token: string | undefined, email: string, name: string) => {
   return async function (dispatch: Function) {
     await fetch (`${URL}auth/user`, {
       method: 'PATCH',

@@ -16,10 +16,8 @@ const socetMiddleware = (wsUrl: string, wsAction: TUnionWsAction): Middleware =>
       }
 
       if (socket) {
-        if (type === wsStart) {
-          socket.onopen = event => {
+        socket.onopen = event => {
             dispatch ({type: onOpen})
-          }
         }
 
         if (type === wsClose) {

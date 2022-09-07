@@ -1,10 +1,10 @@
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/store';
 
 import style from './OrderDetails.module.css'
 
 const OrderDetails = () => {
-  const orderNumber = useSelector(store => store.ingridientReducer.order)
+  const orderNumber = useAppSelector(store => store.ingridientReducer.order)
   return (
     <>
     <h2 className={'text text_type_digits-large mt-30 '+style.number}>{orderNumber}</h2>

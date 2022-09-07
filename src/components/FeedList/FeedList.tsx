@@ -1,10 +1,12 @@
+import { FC } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { TOrder } from "../../services/types/ordersDetail"
 
 import ItemFeedList from "../ItemFeedList/ItemFeedList"
 
 import style from './FeedList.module.css'
 
-const FeedList = ({className, orders, isPersonal}) => {
+const FeedList:FC<{className: string, orders: Array<TOrder>, isPersonal: boolean}> = ({className, orders, isPersonal}) => {
 
   const location = useLocation()
 

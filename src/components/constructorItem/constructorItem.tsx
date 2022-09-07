@@ -1,21 +1,23 @@
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
-import { useRef } from 'react'
-import { useDrop,useDrag } from "react-dnd";
+import { FC, MutableRefObject, useRef } from 'react'
+import { useDrop,useDrag, DropTargetMonitor } from "react-dnd";
 
-import { ingredientPropTypes } from "../../utils/constants";
 import {GET_INGREDIENT_FOR_BURGER} from '../../services/actions/index'
 
 import style from './constructorItem.module.css'
+import { TBurgerItem, TIngredient } from '../../services/types/ingredient';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
+type TConstructorItem = TBurgerItem & {index: number}
 
-const ConstructorItem = ({ingredient, index}) => {
+const ConstructorItem: FC<TConstructorItem> = ({ingredient, index}) => {
 
-  const elseIngredients = useSelector(store=> store.ingridientReducer.ingredientsForBurger).elseIngregients;
-  const dispatch = useDispatch()
-  const ref = useRef()
+  const elseIngredients = useAppSelector(store=> store.ingridientReducer.ingredientsForBurger).elseIngregients;
+  const dispatch = useAppDispatch()
 
-  const deleteItem = (data) => {
+  const ref: MutableRefObject<HTMLLIElement | null> = useRef<HTMLLIElement>(null);
+
+  const deleteItem = (data: TIngredient) => {
     let newElseIngredient =  elseIngredients.filter(i => i.uuid !== data.uuid);
     if (newElseIngredient.length === 0) {
       newElseIngredient = []
@@ -26,7 +28,7 @@ const ConstructorItem = ({ingredient, index}) => {
     })
   }
 
-  const sortElseIngredient = (dragObject ,index) => {
+  const sortElseIngredient = (dragObject: {index: number} ,index: number) => {
     elseIngredients.splice(index, 0, elseIngredients.splice(dragObject.index, 1)[0])
     dispatch ({
       type: GET_INGREDIENT_FOR_BURGER,
@@ -44,10 +46,10 @@ const ConstructorItem = ({ingredient, index}) => {
 
   const [{ isHover }, dropRef] = useDrop({
     accept: "draggable-ingredient",
-    collect: monitor => ({
+    collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver()
     }),
-    drop(dragObject) {
+    drop(dragObject:{index: number}) {
       if (dragObject.index === index) {
         return
       }

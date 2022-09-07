@@ -1,10 +1,11 @@
+import { noneOrder, noneOrders } from '../../utils/constants';
 import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA} from '../actions/WS';
-import { TInitialWsState, TUnioniWsAll, TWsState } from '../types/toDo/toDoWsReducer';
+import { TUnioniWsAll, TWsState } from '../types/toDo/toDoWsReducer';
 
-const initalState: TInitialWsState = {
+const initalState: TWsState = {
   wsContected: false,
   connectionError: {},
-  orders: {}
+  orders: noneOrders
 }
 
 const wsReducerAll = (state = initalState, action: TUnioniWsAll): TWsState => {

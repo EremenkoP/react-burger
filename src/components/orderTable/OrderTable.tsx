@@ -1,6 +1,13 @@
+import { FC } from 'react';
+import { TOrdersData } from '../../services/types/toDo/toDoWsReducer';
 import style from './OrderTable.module.css'
 
-const OrderTable = ({data, className}) => {
+type TOrderTable = {
+  data: TOrdersData;
+  className: string
+}
+
+const OrderTable: FC<TOrderTable> = ({data, className}) => {
 
   const orderReady = data.orders.filter(order => order.status === 'done')
   const orderInWork = data.orders.filter(order => order.status !== 'done')

@@ -1,6 +1,13 @@
+import { FC } from "react"
 import { Redirect, Route, useLocation } from "react-router-dom"
 
-const ProtectedRoute = ({children, logistic, path, toRedirect, ...rest}) => {
+type TProtectedRoute = {
+  logistic: boolean;
+  path: string;
+  toRedirect: string
+}
+
+const ProtectedRoute: FC<TProtectedRoute> = ({children, logistic, path, toRedirect, ...rest}) => {
 
   const location = useLocation()
 

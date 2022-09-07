@@ -1,14 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { FC } from 'react';
 import {ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { v4 as uuid } from 'uuid'
-import { useDrop } from "react-dnd";
+import { useDrop, DropTargetMonitor } from "react-dnd";
 
 import { ConstructorItem } from '../constructorItem/constructorItem';
 import {GET_INGREDIENT_FOR_BURGER, GET_BUN_FOR_BURGER} from '../../services/actions/index'
 
+import { useAppSelector, useAppDispatch } from '../../hooks/store';
+
 import style from "./burgerConstructor.module.css"
 
-const Order = ({bun, elseIngredients, handleOrder}) => {
+import { TBurgerItem, TIngredient } from '../../services/types/ingredient';
+
+type TOrder = {
+  bun: TIngredient;
+  elseIngredients: Array<TIngredient>;
+  handleOrder: (() => void) | undefined;
+}
+
+const Order: FC<TOrder> = ({bun, elseIngredients, handleOrder}) => {
 
   const endPrice  =  bun.price*2 + elseIngredients.reduce((accumulator, currentValue) => accumulator + currentValue.price,0);
 
@@ -25,37 +35,41 @@ const Order = ({bun, elseIngredients, handleOrder}) => {
   )
 }
 
-const BurgerConstructor = ({ handleOrder }) => {
+type TBurgerConstructor = {
+  handleOrder: (() => void) | undefined;
+}
 
-  const dispatch = useDispatch()
+const BurgerConstructor: FC<TBurgerConstructor> = ({ handleOrder }) => {
 
-  const ingredients = useSelector(store=> store.ingridientReducer.ingredientsForBurger);
+  const dispatch = useAppDispatch()
+
+  const ingredients = useAppSelector(store=> store.ingridientReducer.ingredientsForBurger);
 
   const bun = ingredients.bun;
   const elseIngredients = ingredients.elseIngregients
 
-  const addElseIngredients = (data) => {
-    const ingr = {...data.ingredient, 'uuid' : uuid()}
-    elseIngredients.push(ingr);
+  const addElseIngredients = (data: TIngredient) => {
+    const ingr = {...data, 'uuid' : uuid()}
+    elseIngredients.splice(elseIngredients.length, 0 ,ingr);
     dispatch({
       type: GET_INGREDIENT_FOR_BURGER,
       data: elseIngredients
     })
   }
 
-  const [ {isHover }, dropTarget] = useDrop ({
+  const [{isHover}, dropTarget] = useDrop ({
     accept: "ingredients",
-    collect: monitor => ({
+    collect: (monitor: DropTargetMonitor) => ({
       isHover: monitor.isOver()
     }),
-    drop(dropIngredient) {
+    drop(dropIngredient: TBurgerItem) {
       if (dropIngredient.ingredient.type === 'bun' ) {
         dispatch({
           type: GET_BUN_FOR_BURGER,
           data: dropIngredient.ingredient
         })
       } else {
-        addElseIngredients(dropIngredient)
+        addElseIngredients(dropIngredient.ingredient)
       }
   }})
 

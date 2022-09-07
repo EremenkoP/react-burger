@@ -1,17 +1,13 @@
 import {GET_ORDER_DETAILS,REMOVE_ORDER_DETAILS} from '../../actions/orderDetail'
-import { TOrderDetail } from '../ordersDetail'
-
-type TInitialStateOrder = {
-  order: {}
-}
+import { TOrder } from '../ordersDetail'
 
 type TStateOrder = {
-  order: {} | TOrderDetail
+  order: TOrder
 }
 
 interface IGetOrderDetails {
   readonly type: typeof GET_ORDER_DETAILS;
-  readonly data: TOrderDetail
+  readonly data: TOrder
 }
 
 interface IRemoveOrderDetails {
@@ -21,4 +17,4 @@ interface IRemoveOrderDetails {
 
 type TUnionOrderDetail = IGetOrderDetails | IRemoveOrderDetails;
 
-export {TInitialStateOrder, TStateOrder, TUnionOrderDetail}
+export { TStateOrder, TUnionOrderDetail}

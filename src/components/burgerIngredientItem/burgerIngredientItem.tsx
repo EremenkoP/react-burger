@@ -1,19 +1,17 @@
 import { CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC } from "react";
 import { useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/store";
 
 import { INGREDIENT_DETAILS} from '../../services/actions/index'
 import { TIngredientItem } from '../../services/types/ingredient'
 
 import style from './burgerIngredientItem.module.css'
 
-
-
 const BurgerIngredientItem: FC<TIngredientItem> = ({ingredient, count}) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation()
 
   const [{ isDrag }, dragRef] = useDrag({

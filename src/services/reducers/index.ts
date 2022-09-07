@@ -1,14 +1,15 @@
+import { noneIngredient } from '../../utils/constants'
 import {GET_INGREDIENTS, GET_INGREDIENT_FOR_BURGER, INGREDIENT_DETAILS, DETAILS_REMOVE, ORDER, GET_BUN_FOR_BURGER,
   REMOVE_INGREDIENT_FOR_BURGER} from '../actions/index'
-import { TInitialState, TState, TUnionIngredientAction } from '../types/toDo/toDoIngredient'
+import { TState, TUnionIngredientAction } from '../types/toDo/toDoIngredient'
 
-const initialState: TInitialState = {
+const initialState: TState = {
   ingredients: [],
   ingredientsForBurger: {
     bun: false,
     elseIngregients: []
   },
-  ingredientDetail: {},
+  ingredientDetail: noneIngredient,
   order: {}
 }
 
@@ -57,7 +58,7 @@ const ingridientReducer = (state = initialState, action: TUnionIngredientAction)
     case DETAILS_REMOVE:{
       return {
         ...state,
-        ingredientDetail: {}
+        ingredientDetail: noneIngredient
       }
     }
     case ORDER:{
