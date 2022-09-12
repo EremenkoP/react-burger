@@ -4,7 +4,8 @@ import { Redirect, Route, useLocation } from "react-router-dom"
 type TProtectedRoute = {
   logistic: boolean;
   path: string;
-  toRedirect: string
+  toRedirect: string;
+  exact?: boolean
 }
 
 const ProtectedRoute: FC<TProtectedRoute> = ({children, logistic, path, toRedirect, ...rest}) => {

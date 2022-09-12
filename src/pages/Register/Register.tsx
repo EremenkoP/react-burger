@@ -1,32 +1,32 @@
 import {Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 
 import Form from '../../components/form/form'
 import InputContainer from '../../components/inputContainer/InputContainer'
+import { useAppDispatch } from '../../hooks/store'
 import { registrationAuth } from '../../services/actions/API'
 
 import style from "./Register.module.css"
 
 const Register =  () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const history = useHistory()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const submitRegistration = (event) => {
+  const submitRegistration = (event:Event) => {
     event.preventDefault();
     dispatch(registrationAuth(email, password, name))
-    .then(history.replace({ pathname: '/profile' }))
+    history.replace({ pathname: '/profile' })
   }
 
   return (
     <div className={style.content}>
-      <Form title={'Регистрация'} nameButton={'Зарегистрироваться'} onClick={submitRegistration}>
+      <Form title={'Регистрация'} nameButton={'Зарегистрироваться'} onClick={()=>submitRegistration}>
       <InputContainer>
         <Input
           type='text'
@@ -47,9 +47,10 @@ const Register =  () => {
       </InputContainer>
       <InputContainer>
         <PasswordInput
-          size={'large'}
+          size={'default'}
           value={password}
           onChange={e => setPassword(e.target.value)}
+          name='password'
         />
       </InputContainer>
       </Form>

@@ -1,9 +1,7 @@
 import React, {useEffect} from "react";
-import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useHistory } from "react-router-dom"
-
 
 import BurgerIngredients from "../../components/burgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/burgerConstructor/burgerConstructor";
@@ -13,18 +11,20 @@ import OrderDetails from "../../components/orderDetails/OrderDetails";
 import { pushOrder, getNewToken } from "../../services/actions/API";
 import { accessToken, refreshToken } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 
 import style from './home.module.css'
 
+
 const Home = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory()
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
-    const ingredients = useSelector(store => store.ingridientReducer.ingredients)
-    const ingredientsForOrder = useSelector(store => store.ingridientReducer.ingredientsForBurger)
-    const isAuth = useSelector(store => store.authReducer.isAuth)
+    const ingredients = useAppSelector(store => store.ingridientReducer.ingredients)
+    const ingredientsForOrder = useAppSelector(store => store.ingridientReducer.ingredientsForBurger)
+    const isAuth = useAppSelector(store => store.authReducer.isAuth)
 
     const closeModalsOrder = () => {
       setIsOrderDetailsOpened(false);
@@ -42,7 +42,7 @@ const Home = () => {
       if(isAuth){
         const ingredientsOrder = ingredientsForOrder.elseIngregients.map((ingredient) => ingredient._id)
         ingredientsOrder.unshift(ingredientsForOrder.bun._id)
-        await dispatch(pushOrder(ingredientsOrder,  getCookie(accessToken)))
+        await dispatch(pushOrder(ingredientsOrder, getCookie(accessToken)))
         setIsOrderDetailsOpened(true)
       } else {
         history.push('/login')
@@ -69,7 +69,7 @@ const Home = () => {
         </main>
 
         {isOrderDetailsOpened && (
-          <Modal onCloseClick={closeModalsOrder}>
+          <Modal onCloseClick={()=>closeModalsOrder()}>
             <OrderDetails />
           </Modal>
         )}

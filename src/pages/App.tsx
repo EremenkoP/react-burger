@@ -1,5 +1,4 @@
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 
 import AppHeader from '../components/appHeader/AppHeader';
@@ -22,15 +21,17 @@ import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
 import { WS_AUTH_START } from '../services/actions/WSauth';
+import { useAppDispatch, useAppSelector } from '../hooks/store';
+import { ILocationState } from '../services/types/data';
 
 
 const App = () => {
 
-  const location = useLocation();
-  const dispatch = useDispatch()
+  const location = useLocation<ILocationState>();
+  const dispatch = useAppDispatch()
 
-  const isAuth = useSelector(state => state.authReducer.isAuth)
-  const resetPassword = useSelector(state => state.authReducer.resetPassword)
+  const isAuth = useAppSelector(state => state.authReducer.isAuth)
+  const resetPassword = useAppSelector(state => state.authReducer.resetPassword)
 
   const background = location.state?.background;
 

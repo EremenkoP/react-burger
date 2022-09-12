@@ -5,7 +5,7 @@ import { TIngredient } from '../ingredient'
 type TState = {
   ingredients: [] | Array<TIngredient>,
   ingredientsForBurger: {
-    bun: false | TIngredient,
+    bun: TIngredient,
     elseIngregients: [] | Array<TIngredient>
   },
   ingredientDetail: TIngredient,
@@ -29,7 +29,7 @@ interface IGetBunForBurger {
 
 interface IRemoveIngredientForBurger {
   readonly type: typeof REMOVE_INGREDIENT_FOR_BURGER;
-  readonly bun: false;
+  readonly bun: TIngredient;
   readonly elseIngregients: [];
 }
 

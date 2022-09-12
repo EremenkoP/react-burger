@@ -1,13 +1,13 @@
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import IngredientDetails from "../../components/ingredientDetails/IngredientDetails";
 import Modal from "../../components/modal/Modal";
+import { useAppDispatch } from "../../hooks/store";
 
 import { DETAILS_REMOVE } from '../../services/actions/index'
 
 const IngridientDetails = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const history = useHistory()
 
   const closeModals = () => {

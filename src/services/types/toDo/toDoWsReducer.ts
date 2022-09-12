@@ -2,10 +2,6 @@ import { TOrder } from "../ordersDetail"
 import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA} from '../../actions/WS';
 import {WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA} from '../../actions/WSauth';
 
-type TOrders = {
-  orders: Array<TOrder>
-}
-
 type TWsState = {
   wsContected: boolean,
   connectionError: {} | string,
@@ -45,13 +41,6 @@ interface IWsAuthClosedWithError {
   readonly data: {}
 }
 
-type TAuthOrders = {
-  orders: TOrders;
-  success: boolean
-  total: number
-  totalToday: number
-}
-
 type TOrdersData = {
   orders: Array<TOrder>;
   success: boolean
@@ -66,4 +55,4 @@ interface IWsAuthGetData {
 
 type TUnioniWsAuth = IWsAuthClosed | IWsAuthOpened | IWsAuthClosedWithError | IWsAuthGetData
 
-export { TWsState, TUnioniWsAll, TUnioniWsAuth, TAuthOrders, TOrdersData}
+export { TWsState, TUnioniWsAll, TUnioniWsAuth, TOrdersData}

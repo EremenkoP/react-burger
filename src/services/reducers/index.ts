@@ -6,7 +6,7 @@ import { TState, TUnionIngredientAction } from '../types/toDo/toDoIngredient'
 const initialState: TState = {
   ingredients: [],
   ingredientsForBurger: {
-    bun: false,
+    bun: noneIngredient,
     elseIngregients: []
   },
   ingredientDetail: noneIngredient,
@@ -44,7 +44,7 @@ const ingridientReducer = (state = initialState, action: TUnionIngredientAction)
         ...state,
         ingredientsForBurger: {
           ...state.ingredientsForBurger,
-          bun: false,
+          bun: noneIngredient,
           elseIngregients: []
         }
       }

@@ -26,7 +26,7 @@ const getIngredients = () => {
   }
 }
 // отправка заказа
-const pushOrder = (ingredientsForOrder: Array<string>,  token: string) => {
+const pushOrder = (ingredientsForOrder: Array<string>,  token: string | undefined) => {
   return async function(dispatch: Function) {
     await fetch(`${URL}orders`, {
       method: 'POST',

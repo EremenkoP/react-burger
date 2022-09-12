@@ -1,23 +1,23 @@
 import {Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { FormEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 import Form from '../../components/form/form'
 import InputContainer from '../../components/inputContainer/InputContainer'
+import { useAppDispatch } from '../../hooks/store'
 import { autorizationUser } from '../../services/actions/API'
 
 import style from "./login.module.css"
 
 const Login =  () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory()
 
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
 
-  const submitAutorization = async (event) => {
+  const submitAutorization = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await dispatch(autorizationUser(email, password))
     history.push('/')
@@ -25,7 +25,7 @@ const Login =  () => {
 
   return (
     <div className={style.content}>
-    <Form title={'Вход'} nameButton={'Войти'} onClick={submitAutorization}>
+    <Form title={'Вход'} nameButton={'Войти'} onClick={(event)=>submitAutorization(event)}>
       <InputContainer>
         <Input
           type='email'
@@ -37,9 +37,10 @@ const Login =  () => {
       </InputContainer>
       <InputContainer>
         <PasswordInput
-          size={'large'}
+          size={'default'}
           value={password}
           onChange={e => setPassword(e.target.value)}
+          name='password'
         />
       </InputContainer>
     </Form>

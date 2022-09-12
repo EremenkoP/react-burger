@@ -75,7 +75,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ handleOrder }) => {
 
    return (
     <section className={`ml-10 mt-25 ${isHover && style.droppable}`}  ref={dropTarget}>
-      { bun ?
+      { bun.type !== 'none' ?
         (<div className={" mr-4 " + style.element_top}>
           <ConstructorElement
           type="top"
@@ -109,7 +109,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ handleOrder }) => {
         )
       }
 
-      { bun ?
+      {  bun.type !== 'none' ?
         (<div className={" mr-4 " + style.element_buttom}>
           <ConstructorElement
             type="bottom"

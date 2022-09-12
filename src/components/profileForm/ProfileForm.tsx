@@ -22,7 +22,7 @@ const ProfileForm = () => {
   const [password, setPassword] = useState('P@ssw0rd')
   const [disPassword, setDisPassword] = useState(true)
 
-  const isChange = (!disName || !disEmail || !disPassword) && (name !== user.name || email !== user.email || password !== 'Password')
+  const isChange = (!disName || !disEmail || !disPassword) && (name !== user.name || email !== user.email || password !== 'P@ssw0rd')
 
   useEffect ( ()=> {
       dispatch(getUser(getCookie(accessToken)))

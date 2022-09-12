@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import {  useCallback } from "react";
 import { NavLink, useLocation, useHistory} from "react-router-dom"
 
 import { logOut } from "../../services/actions/API";
@@ -8,7 +8,7 @@ import { getCookie } from "../../utils/cookie";
 import style from './ProfileNav.module.css';
 import { useAppDispatch } from "../../hooks/store";
 
-const ProfileNav: FC<{url: string}> = ({url}) =>{
+const ProfileNav = () =>{
 
   const location = useLocation();
   const history = useHistory();

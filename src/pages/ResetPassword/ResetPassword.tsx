@@ -1,7 +1,8 @@
 import {Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+
+import { useAppDispatch } from '../../hooks/store'
 
 import Form from '../../components/form/form'
 import InputContainer from '../../components/inputContainer/InputContainer'
@@ -11,13 +12,13 @@ import style from "./ResetPassword.module.css"
 
 const ResetPassword =  () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [secret, setSecret] = useState(true)
   const [password, setPassword] = useState('')
   const [token, setToken] = useState('')
 
-  const submitResetPassword = async (event) =>{
+  const submitResetPassword = async (event:Event) =>{
     event.preventDefault();
     await dispatch(resetPassword(password, token));
     setPassword('');
@@ -26,7 +27,7 @@ const ResetPassword =  () => {
 
   return (
     <div className={style.content}>
-      <Form title={'Восстановление пароля'} nameButton={'Сохранить'} onClick={submitResetPassword}>
+      <Form title={'Восстановление пароля'} nameButton={'Сохранить'} onClick={()=>submitResetPassword}>
       <InputContainer>
         <Input
           type={secret ? 'password' : 'text'}

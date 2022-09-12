@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch} from "react-redux";
 
 import FeedList from "../../components/FeedList/FeedList";
 import OrderTable from "../../components/orderTable/OrderTable";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { WS_IS_CLOSE, WS_IS_OPEN } from "../../services/actions/WS";
 
 import style from "./Feed.module.css";
 
 const Feed = () => {
-  const ordersData = useSelector((state) => state.wsReducerAll.orders);
-  const dispatch = useDispatch()
+  const ordersData = useAppSelector((state) => state.wsReducerAll.orders);
+  const dispatch = useAppDispatch()
 
   useEffect(()=> {
     dispatch({type: WS_IS_OPEN})
