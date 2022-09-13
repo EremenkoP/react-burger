@@ -41,7 +41,7 @@ const wsAuthAction = {
 
 const enhancer = composeEnhancers(applyMiddleware(
   thunk,
-  socketMiddleware(WSS ,wsAction || wsAuthAction),
+  socketMiddleware(WSS ,wsAction || wsAuthAction)
   ));
 
 const store = createStore(rootReducer, enhancer);

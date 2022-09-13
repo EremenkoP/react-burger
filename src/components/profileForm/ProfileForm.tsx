@@ -1,5 +1,5 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import InputContainer from '../inputContainer/InputContainer'
 import { getUser, renameUser } from '../../services/actions/API';
@@ -8,6 +8,7 @@ import { getCookie } from '../../utils/cookie';
 
 
 import style from './ProfileForm.module.css'
+import { Loading } from '../Loading/Loading';
 
 const ProfileForm = () => {
 
@@ -21,12 +22,23 @@ const ProfileForm = () => {
   const [disEmail, setDisEmail] = useState(true)
   const [password, setPassword] = useState('P@ssw0rd')
   const [disPassword, setDisPassword] = useState(true)
+  const [isLoad, setIsLoad] = useState(false);
 
   const isChange = (!disName || !disEmail || !disPassword) && (name !== user.name || email !== user.email || password !== 'P@ssw0rd')
 
+  const getUserData = useCallback( async() => {
+    setIsLoad(true)
+    await dispatch(getUser(getCookie(accessToken)))
+    setName(user.name);
+    setEmail(user.email)
+    setIsLoad(false);
+  }, [dispatch, user.email, user.name])
+
+
+
   useEffect ( ()=> {
-      dispatch(getUser(getCookie(accessToken)))
-    }, [dispatch]
+      getUserData()
+    }, [getUserData]
   )
 
   const cancelChange = () => {
@@ -91,6 +103,7 @@ const ProfileForm = () => {
           Сохранить
         </Button>
       </div>}
+      {isLoad && <Loading />}
     </div>
   )
 }

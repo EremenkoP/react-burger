@@ -5,6 +5,7 @@ import { TUnionWsAction } from "../types/ws";
 
 const socketMiddleware = (url: string, wsAction: TUnionWsAction): Middleware => {
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+
     let socket: WebSocket | null = null;
 
     return next => action => {

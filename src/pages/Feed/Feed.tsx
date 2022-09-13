@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import FeedList from "../../components/FeedList/FeedList";
+import { Loading } from "../../components/Loading/Loading";
 import OrderTable from "../../components/orderTable/OrderTable";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { WS_IS_CLOSE, WS_IS_OPEN, WS_START } from "../../services/actions/WS";
@@ -40,6 +41,7 @@ const Feed = () => {
           Секундочку, происходит загрузка данных...
         </h2>
       )}
+      {!ordersData.success && <Loading />}
     </div>
   );
 };

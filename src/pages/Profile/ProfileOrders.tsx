@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 
 import FeedList from "../../components/FeedList/FeedList"
+import { Loading } from "../../components/Loading/Loading"
 import ProfileNav from "../../components/provileNav/ProvileNav"
 import { useAppDispatch, useAppSelector } from "../../hooks/store"
 import { WS_AUTH_IS_CLOSE, WS_AUTH_IS_OPEN, WS_AUTH_START } from "../../services/actions/WSauth"
@@ -32,6 +33,7 @@ const ProfileOrders = () => {
     <div className={style.content}>
       <ProfileNav/>
       <FeedList orders={orders.orders} isPersonal={true} className={style.feedList}/>
+      {!orders.success && <Loading />}
     </div>
   )
 }
