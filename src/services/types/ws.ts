@@ -1,9 +1,8 @@
-import { GET_INGREDIENTS } from "../actions"
-import { WS_CLOSED, WS_CLOSED_WITH_ERROR, WS_GET_DATA, WS_IS_CLOSE, WS_IS_OPEN, WS_OPENED } from "../actions/WS"
+import { WS_CLOSED, WS_CLOSED_WITH_ERROR, WS_GET_DATA, WS_IS_CLOSE, WS_IS_OPEN, WS_OPENED, WS_START } from "../actions/WS"
 import { WS_AUTH_CLOSED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA, WS_AUTH_IS_OPEN, WS_AUTH_OPENED, WS_AUTH_START } from "../actions/WSauth"
 
 type TWsAction = {
-  readonly wsInit: typeof  GET_INGREDIENTS,
+  readonly wsInit: typeof  WS_START,
   readonly onOpen: typeof  WS_OPENED,
   readonly onClose: typeof  WS_CLOSED,
   readonly  onError: typeof  WS_CLOSED_WITH_ERROR,

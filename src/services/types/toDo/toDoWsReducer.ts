@@ -1,6 +1,6 @@
 import { TOrder } from "../ordersDetail"
-import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA} from '../../actions/WS';
-import {WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA} from '../../actions/WSauth';
+import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA, WS_START} from '../../actions/WS';
+import {WS_AUTH_CLOSED, WS_AUTH_OPENED, WS_AUTH_CLOSED_WITH_ERROR, WS_AUTH_GET_DATA, WS_AUTH_START} from '../../actions/WSauth';
 
 type TWsState = {
   wsContected: boolean,
@@ -26,7 +26,12 @@ interface IWsGetData {
   readonly data: TOrdersData
 }
 
-type TUnioniWsAll = IWsClosed | IWsOpened | IWsClosedWithError | IWsGetData
+interface IWsStart {
+  readonly type: typeof WS_START;
+  readonly data: string;
+}
+
+type TUnioniWsAll = IWsClosed | IWsOpened | IWsClosedWithError | IWsGetData |IWsStart
 
 interface IWsAuthClosed {
   readonly type: typeof WS_AUTH_CLOSED;
@@ -34,6 +39,11 @@ interface IWsAuthClosed {
 
 interface IWsAuthOpened {
   readonly type: typeof WS_AUTH_OPENED;
+}
+
+interface IWsAuthStart {
+  readonly type: typeof WS_AUTH_START;
+  readonly data: string;
 }
 
 interface IWsAuthClosedWithError {
@@ -53,6 +63,6 @@ interface IWsAuthGetData {
   readonly data: TOrdersData
 }
 
-type TUnioniWsAuth = IWsAuthClosed | IWsAuthOpened | IWsAuthClosedWithError | IWsAuthGetData
+type TUnioniWsAuth = IWsAuthClosed | IWsAuthOpened | IWsAuthClosedWithError | IWsAuthGetData | IWsAuthStart;
 
 export { TWsState, TUnioniWsAll, TUnioniWsAuth, TOrdersData}

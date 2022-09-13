@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useHistory } from "react-router-dom"
@@ -14,6 +14,7 @@ import { getCookie } from "../../utils/cookie";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 
 import style from './home.module.css'
+import { Loading } from "../../components/Loading/Loading";
 
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
     const history = useHistory()
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
+    const [isOrderPush, setIsOrderPush] = useState(false)
 
     const ingredients = useAppSelector(store => store.ingridientReducer.ingredients)
     const ingredientsForOrder = useAppSelector(store => store.ingridientReducer.ingredientsForBurger)
@@ -40,10 +42,12 @@ const Home = () => {
 
     const handleOrderClick = async () => {
       if(isAuth){
+        setIsOrderPush(true)
         const ingredientsOrder = ingredientsForOrder.elseIngregients.map((ingredient) => ingredient._id)
         ingredientsOrder.unshift(ingredientsForOrder.bun._id)
         await dispatch(pushOrder(ingredientsOrder, getCookie(accessToken)))
         setIsOrderDetailsOpened(true)
+        setIsOrderPush(false)
       } else {
         history.push('/login')
       }
@@ -55,11 +59,9 @@ const Home = () => {
         <DndProvider backend={HTML5Backend}>
           { ingredients.length !== 0 ? (
             <div className={style.content}>
-
                 <BurgerIngredients />
-
                 <BurgerConstructor handleOrder={handleOrderClick} />
-
+                {isOrderPush && <Loading />}
             </div>
             ) : (
               <p className={'text text_type_main-large text_color_inactive mt-15'}>Минуточку, мы стыкуемся...</p>

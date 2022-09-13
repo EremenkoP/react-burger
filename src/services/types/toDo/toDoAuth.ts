@@ -14,27 +14,22 @@ interface IGetUser {
 
 interface  IDeleteUser {
   readonly type: typeof DELETE_USER;
-  readonly user: {};
 }
 
 interface  IIsAuth {
   readonly type: typeof IS_AUTH;
-  readonly isAuth: true;
 }
 
 interface  IIsUnAuth {
   readonly type: typeof IS_UNAUTH;
-  readonly isAuth: false;
 }
 
 interface  ITryResetPassword {
   readonly type: typeof TRY_RESET_PASSWORD;
-  readonly resetPassword: true;
 }
 
 interface  IPasswordIsReset {
   readonly type: typeof PASSWORD_IS_RESET;
-  readonly resetPassword: false;
 }
 
 type TUnionAuthAction = IGetUser | IDeleteUser | IIsAuth | IIsUnAuth| ITryResetPassword| IPasswordIsReset;

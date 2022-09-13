@@ -126,7 +126,7 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ handleOrder }) => {
           </div>
         )
       }
-        {bun && elseIngredients && (<Order elseIngredients={elseIngredients}  bun={bun} handleOrder={handleOrder}/>)}
+        {bun.type !== 'none' && elseIngredients.length !== 0 && (<Order elseIngredients={elseIngredients}  bun={bun} handleOrder={handleOrder}/>)}
     </section>
   )
 }

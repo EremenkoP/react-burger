@@ -1,4 +1,4 @@
-import { noneOrder, noneOrders } from '../../utils/constants';
+import { noneOrders } from '../../utils/constants';
 import {WS_CLOSED, WS_OPENED, WS_CLOSED_WITH_ERROR, WS_GET_DATA} from '../actions/WS';
 import { TUnioniWsAll, TWsState } from '../types/toDo/toDoWsReducer';
 

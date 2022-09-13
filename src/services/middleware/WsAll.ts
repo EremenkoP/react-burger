@@ -1,8 +1,9 @@
 import { MiddlewareAPI, Middleware } from "redux";
+import { WSS } from "../../utils/constants";
 import { AppDispatch, RootState } from "../types/store";
 import { TUnionWsAction } from "../types/ws";
 
-const socetMiddleware = (wsUrl: string, wsAction: TUnionWsAction): Middleware => {
+const socketMiddleware = (url: string, wsAction: TUnionWsAction): Middleware => {
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
@@ -12,12 +13,14 @@ const socetMiddleware = (wsUrl: string, wsAction: TUnionWsAction): Middleware =>
       const {wsInit, onOpen, onClose, onError, onDate, wsStart, wsClose} = wsAction;
 
       if (type === wsInit) {
-        socket = new WebSocket(wsUrl)
+        socket = new WebSocket(`${WSS}${data}`)
       }
 
       if (socket) {
-        socket.onopen = event => {
+        if (type === wsStart) {
+          socket.onopen = event => {
             dispatch ({type: onOpen})
+          }
         }
 
         if (type === wsClose) {
@@ -41,4 +44,4 @@ const socetMiddleware = (wsUrl: string, wsAction: TUnionWsAction): Middleware =>
   }
 }
 
-export default socetMiddleware
+export default socketMiddleware

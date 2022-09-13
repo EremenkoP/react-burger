@@ -25,7 +25,7 @@ const Login =  () => {
 
   return (
     <div className={style.content}>
-    <Form title={'Вход'} nameButton={'Войти'} onClick={(event)=>submitAutorization(event)}>
+    <Form title={'Вход'} nameButton={'Войти'} onSubmit={(event)=>submitAutorization(event)}>
       <InputContainer>
         <Input
           type='email'

@@ -1,5 +1,5 @@
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 import Form from '../../components/form/form'
@@ -17,7 +17,7 @@ const ForgotPassword =  () => {
 
   const [email, setEmail] = useState('')
 
-  const submitEmail = async (event: Event): Promise<void> => {
+  const submitEmail = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     await dispatch(postEmailForPassword(email));
     history.push('/reset-password')
@@ -25,7 +25,7 @@ const ForgotPassword =  () => {
 
   return (
     <div className={style.content}>
-      <Form title={'Восстановление пароля'} nameButton={'Восстановить'} onClick={()=>submitEmail}>
+      <Form title={'Восстановление пароля'} nameButton={'Восстановить'} onSubmit={(event)=>submitEmail(event)}>
       <InputContainer>
         <Input
           type='email'

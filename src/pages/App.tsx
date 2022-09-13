@@ -20,7 +20,6 @@ import ProfileOrders from './Profile/ProfileOrders';
 import { getIngredients, getNewToken, getUser} from '../services/actions/API';
 import { accessToken, refreshToken } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
-import { WS_AUTH_START } from '../services/actions/WSauth';
 import { useAppDispatch, useAppSelector } from '../hooks/store';
 import { ILocationState } from '../services/types/data';
 
@@ -46,7 +45,6 @@ const App = () => {
     const token =  getCookie(refreshToken)
     if (token !== undefined) {
       autoAuth(token)
-      dispatch({type: WS_AUTH_START})
     }
   }, [dispatch, autoAuth]);
 

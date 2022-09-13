@@ -29,8 +29,6 @@ interface IGetBunForBurger {
 
 interface IRemoveIngredientForBurger {
   readonly type: typeof REMOVE_INGREDIENT_FOR_BURGER;
-  readonly bun: TIngredient;
-  readonly elseIngregients: [];
 }
 
 interface IIngredientDetails {

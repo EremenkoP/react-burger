@@ -1,5 +1,5 @@
 import {Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 import Form from '../../components/form/form'
@@ -18,7 +18,7 @@ const Register =  () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const submitRegistration = (event:Event) => {
+  const submitRegistration = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(registrationAuth(email, password, name))
     history.replace({ pathname: '/profile' })
@@ -26,7 +26,7 @@ const Register =  () => {
 
   return (
     <div className={style.content}>
-      <Form title={'Регистрация'} nameButton={'Зарегистрироваться'} onClick={()=>submitRegistration}>
+      <Form title={'Регистрация'} nameButton={'Зарегистрироваться'} onSubmit={(event) => submitRegistration(event)}>
       <InputContainer>
         <Input
           type='text'
